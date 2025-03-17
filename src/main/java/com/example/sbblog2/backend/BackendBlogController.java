@@ -1,12 +1,15 @@
 package com.example.sbblog2.backend;
 
-import com.example.sbblog2.Blog;
 import com.example.sbblog2.BlogRepository;
+import com.example.sbblog2.Blog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("backend/blog")
@@ -28,7 +31,9 @@ public class BackendBlogController {
     }
 
     @GetMapping("")
-    public String list(){
+    public String list(Model model) {
+        List<Blog> blogs = blogRepository.findAll();
+        model.addAttribute("blogs", blogs);
         return "backend/blog/list";
     }
 

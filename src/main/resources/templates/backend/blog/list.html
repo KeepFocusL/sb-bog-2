@@ -234,10 +234,10 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody th:each="blog : ${blogs}">
                                     <tr>
-                                        <th>blog.id</th>
-                                        <td><a href="#" target="_blank">blog.title</a></td>
+                                        <th th:text="${blog.id}">blog.id</th>
+                                        <td><a th:href="@{'/blog/' + ${blog.id}}" target="_blank" th:text="${blog.title}">blog.title</a></td>
                                         <td class="center">
                                             <a href="#" class="text-sm">
                                                 <i class="fas fa-edit"></i>
