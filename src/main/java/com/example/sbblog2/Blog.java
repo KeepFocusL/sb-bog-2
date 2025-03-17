@@ -55,4 +55,14 @@ public class Blog {
     public void setCover(String cover) {
         this.cover = cover;
     }
+
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", cover='" + cover + '\'' +
+                '}';
+    }
 }

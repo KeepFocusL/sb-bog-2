@@ -1,5 +1,6 @@
 package com.example.sbblog2.backend;
 
+import org.example.sbblog2.Blog;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +16,8 @@ public class BackendBlogController {
     }
 
     @PostMapping("add")
-    public String save(){
-        System.out.println("接收到博客信息");
+    public String save(Blog blog){
+        System.out.println(blog);
         return "redirect:/backend";
     }
 
