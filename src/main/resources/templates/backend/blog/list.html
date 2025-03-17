@@ -33,7 +33,7 @@
                                         <th th:text="${blog.id}">blog.id</th>
                                         <td><a th:href="@{'/blog/' + ${blog.id}}" target="_blank" th:text="${blog.title}">blog.title</a></td>
                                         <td class="center">
-                                            <a href="#" class="text-sm">
+                                            <a href="#" th:href="@{'/backend/blog/edit/' + ${blog.id}}" class="text-sm">
                                                 <i class="fas fa-edit"></i>
                                                 Edit
                                             </a>
