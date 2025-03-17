@@ -1,0 +1,20 @@
+// Variable overrides first
+@import "partials/variable-overrides-first";
+
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+// Import common
+@import "partials/common";
+
+// Import header
+@import "partials/header";
+
+// Import main
+@import "partials/main";
+
+// Import footer
+@import "partials/footer";
+
+// Import blog
+@import "partials/blog";

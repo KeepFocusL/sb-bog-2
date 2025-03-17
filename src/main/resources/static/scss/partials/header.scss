@@ -1,0 +1,60 @@
+/*============ Header Styles  =============*/
+
+/* logo animate */
+@keyframes ltHover {
+  to {
+    transform: translateX(15px)
+  }
+}
+
+@keyframes zHover {
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gtHover {
+  to {
+    transform: translateX(-15px);
+  }
+}
+
+svg#logo {
+  &:hover {
+    path#logo-lt {
+      animation-name: ltHover;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+    path#logo-z {
+      animation-name: zHover;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+    path#logo-gt {
+      animation-name: gtHover;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 1px solid $gray-200;
+
+  // reset navbar-toggler border
+  .navbar-toggler {
+    border: none;
+  }
+  button.navbar-toggler:focus {
+    outline: none!important;
+    box-shadow: none;
+  }
+  button.navbar-toggler[aria-expanded=false] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-text-left' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z'/></svg>");
+  }
+  button.navbar-toggler[aria-expanded=true] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'><path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/></svg>");
+  }
+}

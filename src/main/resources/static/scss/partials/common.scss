@@ -1,0 +1,36 @@
+/* 3D Hover */
+.transition-3d-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.transition-3d-hover:hover, .transition-3d-hover:focus {
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+/* Custom Spacing */
+.mb-2rem {
+  margin-bottom: 2rem;
+}
+
+.mt-2rem {
+  margin-top: 2rem;
+}
+
+.ml-2rem {
+  margin-left: 2rem;
+}
+
+.mr-2rem {
+  margin-right: 2rem;
+}
+
+.my-2rem {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+a {
+  color: #212529;
+  text-decoration: none;
+}
