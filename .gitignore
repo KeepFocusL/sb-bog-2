@@ -35,3 +35,5 @@ build/
 ### xxx ###
 node_modules
 package-lock.json
+
+src/main/resources/static/build
