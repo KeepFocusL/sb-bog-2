@@ -24,7 +24,12 @@ public class BackendBlogController {
     public String save(Blog blog) {
         System.out.println(blog);
         blogRepository.save(blog);
-        return "redirect:/backend";
+        return "redirect:/backend/blog";
+    }
+
+    @GetMapping("")
+    public String list(){
+        return "backend/blog/list";
     }
 
 
