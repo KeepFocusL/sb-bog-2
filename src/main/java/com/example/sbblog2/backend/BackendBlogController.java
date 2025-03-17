@@ -58,4 +58,10 @@ public class BackendBlogController {
         return "backend/blog/edit";
     }
 
+    @PostMapping("update")
+    public String update(Blog blog) {
+        blogRepository.save(blog);
+        return "redirect:/backend/blog";
+    }
+
 }
