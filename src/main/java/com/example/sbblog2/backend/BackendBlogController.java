@@ -36,15 +36,20 @@ public class BackendBlogController {
     @GetMapping("")
     public String list(Model model,
                        @RequestParam("page") Optional<Integer> page,
-                       @RequestParam("size") Optional<Integer> size) {
+                       @RequestParam("size") Optional<Integer> size,
+                       @RequestParam(value = "keyword", required = false) String keyword) {
         // 如果没有则赋值为 orElse 的值
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("id").descending());
 
-        Page<Blog> pageContent = blogRepository.findAll(pageable);
-
+        Page<Blog> pageContent;
+        if (keyword == null) {
+            pageContent = blogRepository.findAll(pageable);
+        }else {
+            pageContent = blogRepository.searchAllByTitleContains(keyword, pageable);
+        }
         model.addAttribute("page", pageContent);
 
         return "backend/blog/list";
