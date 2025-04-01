@@ -72,11 +72,14 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
                                     <li class="page-item" th:if="${page.hasPrevious()}">
-                                        <a class="page-link" href="#" th:href="@{${requestURI}(page=${page.getNumber()})}" tabindex="-1" aria-disabled="true">Previous</a>
+                                        <a class="page-link" href="#" th:href="${'/backend/blog?page=' + page.getNumber() + (#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword)}">Previous</a>
                                     </li>
-                                    <li th:class="${currentPageNumber == page.getNumber()+1 ? 'page-item active' : 'page-item'}" class="page-item" th:each="currentPageNumber:${#numbers.sequence(1, page.getTotalPages())}"><a class="page-link" th:href="@{${requestURI}(page=${currentPageNumber})}" href="#">[[${currentPageNumber}]]</a></li>
+                                    <li th:class="${currentPageNumber == page.getNumber() + 1 ? 'page-item active' : 'page-item'}" class="page-item"
+                                        th:each="currentPageNumber:${#numbers.sequence(1, page.getTotalPages())}">
+                                        <a class="page-link" th:href="${'/backend/blog?page=' + currentPageNumber + (#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword)}" href="#" th:text="${currentPageNumber}">页码</a>
+                                    </li>
                                     <li class="page-item" th:if="${page.hasNext()}">
-                                        <a class="page-link" href="#" th:href="@{${requestURI}(page=${page.getNumber()+2})}">Next</a>
+                                        <a class="page-link" href="#" th:href="${'/backend/blog?page=' + (page.getNumber() + 2) + (#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword)}">Next</a>
                                     </li>
                                 </ul>
                             </nav>
