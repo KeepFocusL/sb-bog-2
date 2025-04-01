@@ -48,6 +48,8 @@ public class BackendBlogController {
         if (keyword == null) {
             pageContent = blogRepository.findAll(pageable);
         }else {
+            // 如果搜索条件不为空，传值回前端
+            model.addAttribute("keyword", keyword);
             pageContent = blogRepository.searchAllByTitleContains(keyword, pageable);
         }
         model.addAttribute("page", pageContent);
