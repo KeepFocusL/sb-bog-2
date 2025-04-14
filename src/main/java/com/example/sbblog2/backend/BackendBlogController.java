@@ -4,15 +4,20 @@ import jakarta.persistence.EntityNotFoundException;
 import com.example.sbblog2.Blog;
 import com.example.sbblog2.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("backend/blog")
@@ -26,10 +31,30 @@ public class BackendBlogController {
         return "backend/blog/add";
     }
 
+    @Value("${custom.upload.base-path}")
+    String uploadBasePath;
+    @Value("${custom.upload.cover-path}")
+    String coverPath;
     @PostMapping("add")
-    public String save(Blog blog) {
-        System.out.println(blog);
+    public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            File dir = new File(uploadBasePath + File.separator + coverPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String originalFilename = file.getOriginalFilename();
+            System.out.println(originalFilename);
+            assert originalFilename != null;
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String newFilename = UUID.randomUUID() + suffix;
+
+            file.transferTo(new File(dir.getAbsolutePath() + File.separator + newFilename));
+            blog.setCover("/" + coverPath + File.separator + newFilename);
+        }
+
         blogRepository.save(blog);
+
         return "redirect:/backend/blog";
     }
 
@@ -45,13 +70,14 @@ public class BackendBlogController {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("id").descending());
 
         Page<Blog> pageContent;
-        if (keyword == null) {
+        if (keyword == null){
             pageContent = blogRepository.findAll(pageable);
         }else {
             // 如果搜索条件不为空，传值回前端
             model.addAttribute("keyword", keyword);
             pageContent = blogRepository.searchAllByTitleContains(keyword, pageable);
         }
+
         model.addAttribute("page", pageContent);
 
         return "backend/blog/list";
