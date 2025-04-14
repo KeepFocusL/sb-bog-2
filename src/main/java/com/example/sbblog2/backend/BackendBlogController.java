@@ -38,6 +38,14 @@ public class BackendBlogController {
     String coverPath;
     @PostMapping("add")
     public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
+        uploadCover(file, blog);
+
+        blogRepository.save(blog);
+
+        return "redirect:/backend/blog";
+    }
+
+    private void uploadCover(MultipartFile file, Blog blog) throws IOException {
         if (file != null && !file.isEmpty()) {
             File dir = new File(uploadBasePath + File.separator + coverPath);
             if (!dir.exists()) {
@@ -53,10 +61,6 @@ public class BackendBlogController {
             file.transferTo(new File(dir.getAbsolutePath() + File.separator + newFilename));
             blog.setCover("/" + coverPath + File.separator + newFilename);
         }
-
-        blogRepository.save(blog);
-
-        return "redirect:/backend/blog";
     }
 
     @GetMapping("")
@@ -104,21 +108,7 @@ public class BackendBlogController {
 
     @PostMapping("update")
     public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
-        if (file != null && !file.isEmpty()) {
-            File dir = new File(uploadBasePath + File.separator + coverPath);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            String originalFilename = file.getOriginalFilename();
-            System.out.println(originalFilename);
-            assert originalFilename != null;
-            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String newFilename = UUID.randomUUID() + suffix;
-
-            file.transferTo(new File(dir.getAbsolutePath() + File.separator + newFilename));
-            blog.setCover("/" + coverPath + File.separator + newFilename);
-        }
+        uploadCover(file, blog);
 
         blogRepository.save(blog);
 
