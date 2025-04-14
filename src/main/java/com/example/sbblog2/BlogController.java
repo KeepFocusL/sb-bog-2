@@ -1,5 +1,6 @@
 package com.example.sbblog2;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,8 +40,14 @@ public class BlogController {
     }
 
     @GetMapping("{id}")
-    public String show(@PathVariable String id) {
-        System.out.println("id = " + id);
-        return "blog/show";
+    public String show(@PathVariable Long id, Model model){
+        Optional<Blog> optionBlog = blogRepository.findById(id);
+
+        if (optionBlog.isEmpty()){
+            throw new EntityNotFoundException();
+        }else {
+            model.addAttribute("blog",optionBlog.get() );
+            return "blog/show";
+        }
     }
 }
