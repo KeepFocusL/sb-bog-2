@@ -1,12 +1,13 @@
 <div th:replace="~{ app :: layout ('博客列表', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
-    <main class="my-2rem" id="main">
+    <main id="main" class="my-2rem">
+
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <article class="border-bottom h-100 pb-5  pt-md-0">
+                <div class="col-md-6" th:each="blog, stats:${page.getContent()}">
+                    <article class="border-bottom h-100 pb-5  pt-md-0" th:class="|border-bottom h-100 pb-5 ${stats.index > 0 ? 'pt-5' : '' } ${ stats.index < 2 ? 'pt-md-0' : '' }|">
                         <div class="row justify-content-between">
                             <div class="col-7">
-                                <h2 class="mb-2 h5"><a href="/blog/1">||||||||||||||||||||||||||||||</a></h2>
+                                <h2 class="mb-2 h5"><a href="/blog/show" th:href="@{'/blog/' + ${blog.id}}" th:text="${blog.title}">||||||||||||||||||||||||||||||</a></h2>
                                 <div class="small text-muted">
                                     <a href="#">admin</a>
                                     <span> - </span>
@@ -15,92 +16,8 @@
                             </div>
                             <div class="col-5">
                                 <div class="d-flex">
-                                    <a href="/blog/1" class="w-100">
-                                        <img class="img-fluid shadow-sm rounded ratio-16x9"src="/img/cover/default-cover.png">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-md-6">
-                    <article class="border-bottom h-100 pb-5 pt-5 pt-md-0">
-                        <div class="row justify-content-between">
-                            <div class="col-7">
-                                <h2 class="mb-2 h5"><a href="/blog/1">maven 加速，修改镜像源</a></h2>
-                                <div class="small text-muted">
-                                    <a href="#">admin</a>
-                                    <span> - </span>
-                                    <span>2024-11-18 08:35:28</span>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="d-flex">
-                                    <a href="/blog/1" class="w-100">
-                                        <img class="img-fluid shadow-sm rounded ratio-16x9"src="/img/cover/maven-cover.png">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-md-6">
-                    <article class="border-bottom h-100 pb-5 pt-5 ">
-                        <div class="row justify-content-between">
-                            <div class="col-7">
-                                <h2 class="mb-2 h5"><a href="/blog/1">composer 加速，修改镜像源</a></h2>
-                                <div class="small text-muted">
-                                    <a href="#">admin</a>
-                                    <span> - </span>
-                                    <span>2024-11-18 08:35:28</span>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="d-flex">
-                                    <a href="/blog/1" class="w-100">
-                                        <img class="img-fluid shadow-sm rounded ratio-16x9"src="/img/cover/composer-cover.png">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-md-6">
-                    <article class="border-bottom h-100 pb-5 pt-5 ">
-                        <div class="row justify-content-between">
-                            <div class="col-7">
-                                <h2 class="mb-2 h5"><a href="/blog/1">yarn 加速，修改镜像源</a></h2>
-                                <div class="small text-muted">
-                                    <a href="#">admin</a>
-                                    <span> - </span>
-                                    <span>2024-11-18 08:35:28</span>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="d-flex">
-                                    <a href="/blog/1" class="w-100">
-                                        <img class="img-fluid shadow-sm rounded ratio-16x9"src="/img/cover/yarn-cover.png">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-md-6">
-                    <article class="border-bottom h-100 pb-5 pt-5 ">
-                        <div class="row justify-content-between">
-                            <div class="col-7">
-                                <h2 class="mb-2 h5"><a href="/blog/1">npm 加速，修改镜像源</a></h2>
-                                <div class="small text-muted">
-                                    <a href="#">admin</a>
-                                    <span> - </span>
-                                    <span>2024-11-18 08:35:28</span>
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div class="d-flex">
-                                    <a href="/blog/1" class="w-100">
-                                        <img class="img-fluid shadow-sm rounded ratio-16x9"src="/img/cover/npm-cover.png">
+                                    <a href="/blog/show" th:href="@{'/blog/' + ${blog.id}}" class="w-100">
+                                        <img class="img-fluid shadow-sm rounded ratio-16x9" src = "/img/cover/default-cover.png" th:src="${#strings.isEmpty(blog.cover) ? '/img/cover/default-cover.png' : blog.cover}">
                                     </a>
                                 </div>
                             </div>
@@ -108,6 +25,26 @@
                     </article>
                 </div>
             </div>
+            <div id="pagination-container" class="mt-3">
+                <p class="text-muted p-1">当前第 [[${page.getNumber()+1}]] 页，总计 [[${page.getTotalPages()}]] 页，共 [[${page.getTotalElements()}]] 条记录</p>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${page.hasPrevious()}">
+                            <a class="page-link" href="#" th:href="${'/blog?page=' + page.getNumber()}">Previous</a>
+                        </li>
+                        <li th:class="${currentPageNumber == page.getNumber() + 1 ? 'page-item active' : 'page-item'}" class="page-item"
+                            th:each="currentPageNumber:${#numbers.sequence(1, page.getTotalPages())}">
+                            <a class="page-link" th:href="${'/blog?page=' + currentPageNumber}" href="#" th:text="${currentPageNumber}">页码</a>
+                        </li>
+                        <li class="page-item" th:if="${page.hasNext()}">
+                            <a class="page-link" href="#" th:href="${'/blog?page=' + (page.getNumber() + 2)}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
+
     </main>
 </div>
+
+
