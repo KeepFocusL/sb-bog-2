@@ -40,6 +40,16 @@
                             <label for="content">博客内容</label>
                             <textarea class="form-control" name="content" id="content" cols="30" rows="10" th:utext="${blog.content}"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="cover">封面图片</label>
+                            <div class="mb-2" th:if="${!#strings.isEmpty(blog.cover)}">
+                                <img th:src="${blog.cover}" alt="当前封面图" style="max-width: 200px; max-height: 200px;">
+                            </div>
+                            <div>
+                                <input type="file" name="coverImage" id="cover" class="d-block">
+                                <input type="hidden" name="cover" th:value="${blog.cover}">
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
 
