@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -102,8 +103,25 @@ public class BackendBlogController {
     }
 
     @PostMapping("update")
-    public String update(Blog blog) {
+    public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            File dir = new File(uploadBasePath + File.separator + coverPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String originalFilename = file.getOriginalFilename();
+            System.out.println(originalFilename);
+            assert originalFilename != null;
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String newFilename = UUID.randomUUID() + suffix;
+
+            file.transferTo(new File(dir.getAbsolutePath() + File.separator + newFilename));
+            blog.setCover("/" + coverPath + File.separator + newFilename);
+        }
+
         blogRepository.save(blog);
+
         return "redirect:/backend/blog";
     }
 
