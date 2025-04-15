@@ -10,6 +10,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 app: path.resolve(__dirname, "src/main/resources/static/js/app.js"),
+                backend: path.resolve(__dirname, "src/main/resources/static/js/backend.js"),
             },
             output: {
                 entryFileNames: `assets/[name].js`,
