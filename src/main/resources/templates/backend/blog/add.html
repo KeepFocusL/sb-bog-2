@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<div th:replace="~{ backend/app :: layout ('添加博客', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
-    <div class="content-wrapper" id="main">
+<div th:replace="~{ backend/app :: layout ('博客添加', _, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org">
+    <!-- Content Wrapper. Contains page content -->
+    <div id="main" class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -32,12 +33,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title">博客标题</label>
-                            <input type="text" class="form-control" id="title" name="title"
-                                   placeholder="请输入博客标题">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入博客标题">
                         </div>
                         <div class="form-group">
                             <label for="content">博客内容</label>
-                            <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
+                            <textarea class="form-control d-none" name="content" id="content" cols="30" rows="10"></textarea>
+                            <div id="markdown-container" style="height:600px"></div>
                         </div>
                         <div class="form-group">
                             <label for="cover">封面图片</label>
@@ -58,4 +59,14 @@
         </section>
         <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+
+    <script type="module" id="js">
+        const cherryInstance = new Cherry({
+            id: 'markdown-container',
+            value: '',
+        });
+    </script>
 </div>
+
+
