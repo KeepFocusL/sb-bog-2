@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, css, main, js)">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, css, main, js)">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="|${title} - 后台管理 - ${@environment.getProperty('spring.application.name')}|">后台管理</title>
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -11,6 +12,10 @@
   <link rel="stylesheet" href="/vendor/adminlte-3.2.0/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/vendor/adminlte-3.2.0/dist/css/adminlte.min.css">
+
+  <!-- 通用 CSS -->
+  <link rel="stylesheet" href="/build/assets/backend.css">
+
   <!-- 额外的 CSS -->
   <th:block th:replace="${css}" />
 </head>
@@ -34,6 +39,7 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -53,9 +59,9 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
+
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -82,8 +88,8 @@
     <!-- /.sidebar -->
   </aside>
 
+  <!-- 核心内容 -->
   <!-- Content Wrapper. Contains page content -->
-  <!-- 这是核心的内容 -->
   <th:block th:replace="${main}" />
   <!-- /.content-wrapper -->
 
@@ -110,6 +116,10 @@
 <script src="/vendor/adminlte-3.2.0/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/vendor/adminlte-3.2.0/dist/js/demo.js"></script>
+
+<!-- 通用 JS -->
+<script type="module" src="/build/assets/backend.js"></script>
+
 <!-- 额外的 JS -->
 <th:block th:replace="${js}" />
 </body>
