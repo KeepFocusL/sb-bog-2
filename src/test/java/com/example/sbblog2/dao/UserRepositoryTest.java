@@ -30,5 +30,8 @@ public class UserRepositoryTest {
         // 通过 UserRepository 查询名称为 "XXX" 是否存在于数据库中
         User userDb = userRepository.findFirstByName(name);
         Assertions.assertNotNull(userDb);
+
+        // 通过测试后 删除测试数据
+        userRepository.delete(userDb);
     }
 }
