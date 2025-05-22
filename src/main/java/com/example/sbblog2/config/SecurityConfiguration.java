@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .rememberMe(rm -> rm.rememberMeParameter("remember-me"))
+                .csrf(csrf -> csrf.disable())
         ;
         return http.build();
     }
