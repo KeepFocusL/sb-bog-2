@@ -1,6 +1,7 @@
 package com.example.sbblog2.backend;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import com.example.sbblog2.entity.Blog;
 import com.example.sbblog2.dto.BlogDTO;
@@ -77,7 +78,8 @@ public class BackendBlogController {
     public String list(Model model,
                        @RequestParam("page") Optional<Integer> page,
                        @RequestParam("size") Optional<Integer> size,
-                       @RequestParam(value = "keyword", required = false) String keyword) {
+                       @RequestParam(value = "keyword", required = false) String keyword,
+                       HttpServletRequest request) {
         // 如果没有则赋值为 orElse 的值
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -94,7 +96,7 @@ public class BackendBlogController {
         }
 
         model.addAttribute("page", pageContent);
-        model.addAttribute("requestURI", "/backend/blog");
+        model.addAttribute("requestURI", request.getRequestURI());
 
         return "backend/blog/list";
     }
