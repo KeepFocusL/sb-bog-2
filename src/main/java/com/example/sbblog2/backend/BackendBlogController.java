@@ -2,6 +2,7 @@ package com.example.sbblog2.backend;
 
 import jakarta.persistence.EntityNotFoundException;
 import com.example.sbblog2.Blog;
+import com.example.sbblog2.BlogDTO;
 import com.example.sbblog2.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +38,12 @@ public class BackendBlogController {
     @Value("${custom.upload.cover-path}")
     String coverPath;
     @PostMapping("add")
-    public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
-        uploadCover(file, blog);
+    public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, BlogDTO blog) throws IOException {
+//        uploadCover(file, blog);
 
-        blogRepository.save(blog);
+//        blogRepository.save(blog);
+
+        System.out.println(blog);
 
         return "redirect:/backend/blog";
     }
