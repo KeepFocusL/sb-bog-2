@@ -30,52 +30,34 @@
 
                     </div>
                 </div>
-
-                <div class="col-lg-3 offset-lg-1">
-                    <div id="outline" class="sticky-top d-none d-lg-block animate__animated animate__fadeInRight animate__delay-1s">
-                        <ul>
-                            <li>
-                                <a href="#what">What</a>
-                                <ul>
-                                    <li><a href="#are">are</a></li>
-                                    <li><a href="#you">you</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#doing">Doing</a>
-                                <ul>
-                                    <li><a href="#now">now</a></li>
-                                    <li><a href="#blablabla">blablabla...</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-</div>
-</article>
-</main>
+        </article>
+    </main>
 
-<div id="js">
-    <script type="module" src="/build/assets/backend.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cherry = new Cherry({
-                id: 'blog-content',
-                value: document.getElementById('blog-content').dataset.content,
-                editor: {
-                    defaultModel: 'previewOnly',
-                },
-                toolbars: {
-                    // 打开侧边目录
-                    toc: {
-                        updateLocationHash: true,
-                        defaultModel: 'pure',
+    <div id="js">
+        <script type="module" src="/build/assets/backend.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cherry = new Cherry({
+                    id: 'blog-content',
+                    value: document.getElementById('blog-content').dataset.content,
+                    editor: {
+                        defaultModel: 'previewOnly',
                     },
-                }
+                    toolbars: {
+                        // 打开侧边目录
+                        toc: {
+                            updateLocationHash: true,
+                            defaultModel: 'pure',
+                            position: 'fixed',
+                        },
+                    },
+                    previewer: {
+                        enablePreviewerBubble: false,
+                    }
+                });
             });
-        });
-    </script>
-</div>
+        </script>
+    </div>
 
 </div>
