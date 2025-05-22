@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import com.example.sbblog2.Blog;
 import com.example.sbblog2.BlogDTO;
 import com.example.sbblog2.BlogRepository;
+import com.example.sbblog2.service.BlogService;
 import org.hibernate.annotations.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,9 @@ public class BackendBlogController {
     @Autowired
     BlogRepository blogRepository;
 
+    @Autowired
+    BlogService blogService;
+
     @GetMapping("add")
     public String add(Model model) {
         model.addAttribute("blog", new Blog());
@@ -45,8 +49,7 @@ public class BackendBlogController {
     public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
         uploadCover(file, blog);
 
-//        blogRepository.save(blog);
-
+        blogService.save(blog);
 
         System.out.println(blog);
 
@@ -123,7 +126,7 @@ public class BackendBlogController {
     public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
         uploadCover(file, blog);
 
-//        blogRepository.save(blog);
+        blogService.save(blog);
 
         if (result.hasErrors()) {
             return "/backend/blog/edit";
