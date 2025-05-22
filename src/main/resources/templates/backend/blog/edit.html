@@ -22,46 +22,7 @@
         <section class="content">
 
             <!-- Default box -->
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">博客详细信息</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form action="/backend/blog/update" method="post" enctype="multipart/form-data">
-                    <div class="card-body">
-                        <input type="hidden" name="id" th:value="${blog.id}">
-                        <div class="form-group">
-                            <label for="title">博客标题</label>
-                            <input type="text" class="form-control" id="title" name="title"
-                                   placeholder="请输入博客标题" th:value="${blog.title}">
-                        </div>
-                        <div class="form-group">
-                            <label for="content">博客内容</label>
-                            <textarea class="form-control" name="content" id="content" cols="30" rows="10" th:utext="${blog.content}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="content">博客描述</label>
-                            <textarea class="form-control" name="description" id="description" cols="30" rows="5" th:text="${blog.description}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="cover">封面图片</label>
-                            <div class="mb-2" th:if="${!#strings.isEmpty(blog.cover)}">
-                                <img th:src="${blog.cover}" alt="当前封面图" style="max-width: 200px; max-height: 200px;">
-                            </div>
-                            <div>
-                                <input type="file" name="coverImage" id="cover" class="d-block">
-                                <input type="hidden" name="cover" th:value="${blog.cover}">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">修改</button>
-                    </div>
-                </form>
-            </div>
+            <div th:replace="~{backend/fragment :: #blog-form-items}"></div>
             <!-- /.card -->
 
         </section>

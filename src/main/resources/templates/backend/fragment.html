@@ -66,6 +66,7 @@
     <!-- /.card-header -->
     <!-- form start -->
     <form action="/backend/blog/add" method="post" enctype="multipart/form-data" th:object="${blog}">
+        <input type="hidden" name="id" th:value="${id}">
         <div class="card-body">
             <div class="form-group">
                 <label for="title">博客标题</label>
