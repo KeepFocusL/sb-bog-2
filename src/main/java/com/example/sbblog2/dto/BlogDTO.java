@@ -1,4 +1,4 @@
-package com.example.sbblog2;
+package com.example.sbblog2.dto;
 
 
 import jakarta.validation.constraints.NotEmpty;

@@ -1,8 +1,8 @@
 package com.example.sbblog2.service.impl;
 
-import com.example.sbblog2.Blog;
-import com.example.sbblog2.BlogDTO;
-import com.example.sbblog2.BlogRepository;
+import com.example.sbblog2.entity.Blog;
+import com.example.sbblog2.dto.BlogDTO;
+import com.example.sbblog2.dao.BlogRepository;
 import com.example.sbblog2.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

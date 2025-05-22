@@ -1,7 +1,7 @@
 package com.example.sbblog2.service;
 
-import com.example.sbblog2.Blog;
-import com.example.sbblog2.BlogDTO;
+import com.example.sbblog2.entity.Blog;
+import com.example.sbblog2.dto.BlogDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

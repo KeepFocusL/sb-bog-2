@@ -1,5 +1,7 @@
-package com.example.sbblog2;
+package com.example.sbblog2.controller;
 
+import com.example.sbblog2.entity.Blog;
+import com.example.sbblog2.dao.BlogRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

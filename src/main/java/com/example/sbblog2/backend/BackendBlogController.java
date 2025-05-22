@@ -2,11 +2,9 @@ package com.example.sbblog2.backend;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import com.example.sbblog2.Blog;
-import com.example.sbblog2.BlogDTO;
-import com.example.sbblog2.BlogRepository;
+import com.example.sbblog2.entity.Blog;
+import com.example.sbblog2.dto.BlogDTO;
 import com.example.sbblog2.service.BlogService;
-import org.hibernate.annotations.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -21,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
