@@ -14,14 +14,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(
-                        form -> form.loginPage("/login")
+                        form -> form
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/", true)
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers( "/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
+                        .requestMatchers("/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
                         .anyRequest().authenticated()
                 )
         ;
