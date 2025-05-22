@@ -52,6 +52,9 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a sec:authorize="hasRole('admin')" class="dropdown-item" href="#" th:href="@{/backend}">
+                            后台管理
+                        </a>
                         <a class="dropdown-item" href="#"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             退出
