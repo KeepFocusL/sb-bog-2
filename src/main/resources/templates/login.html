@@ -1,7 +1,7 @@
 <div th:replace="~{ app :: layout ('首页', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
     <main class="my-2rem" id="main">
         <div class="container">
-            <form action="/login" method="post">
+            <form th:action="@{/login}" method="post">
                 <input type="text" name="username" placeholder="请输入用户名">
                 <input type="password" name="password" placeholder="请输入密码">
                 <input type="submit" value="login">
