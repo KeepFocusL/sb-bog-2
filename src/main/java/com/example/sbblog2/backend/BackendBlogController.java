@@ -94,6 +94,7 @@ public class BackendBlogController {
         }
 
         model.addAttribute("page", pageContent);
+        model.addAttribute("requestURI", "/backend/blog");
 
         return "backend/blog/list";
     }
