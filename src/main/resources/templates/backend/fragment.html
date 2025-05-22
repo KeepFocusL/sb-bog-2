@@ -15,10 +15,13 @@
 <script type="module" id="js">
     const cherryInstance = new Cherry({
         id: 'markdown-container',
-        value: document.getElementById('content').value,        toolbars: {
+        value: document.getElementById('content').value,
+        toolbars: {
             // 定义顶部工具栏
-            //toolbar: ['bold','italic','strikethrough','|','color','header','ruby','|','list','panel','detail'],
-            // 定义侧边栏，默认为空
+            toolbar: ['bold', 'italic', 'strikethrough', '|', 'color', 'header', '|', 'list', 'detail', 'panel',
+                {insert: ['image', 'audio', 'video', 'link', 'hr', 'code', 'table']},
+                'undo', 'search', 'settings'
+            ],            // 定义侧边栏，默认为空
             sidebar: ['theme'],
             // 定义顶部右侧工具栏，默认为空
             toolbarRight: ['fullScreen', 'export'],
@@ -55,6 +58,45 @@
         },
     });
 </script>
+
+<div id="blog-form-items" class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">填写博客信息</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form action="/backend/blog/add" method="post" enctype="multipart/form-data" th:object="${blog}">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="title">博客标题</label>
+                <input th:field="*{title}" type="text" class="form-control" th:class="|form-control ${#fields.hasErrors('title') ? 'is-invalid' : ''}|" id="title" name="title" placeholder="请输入博客标题">
+                <span th:if="${#fields.hasErrors('title')}" class="error invalid-feedback" th:errors="*{title}"></span>
+            </div>
+            <div class="form-group">
+                <label for="content">博客内容</label>
+                <textarea class="form-control d-none" name="content" id="content" cols="30" rows="10" th:utext="*{content}"></textarea>
+                <div id="markdown-container" style="height:600px" th:class="${#fields.hasErrors('content') ? 'form-control is-invalid' : ''}"></div>
+                <span th:if="${#fields.hasErrors('content')}" class="error invalid-feedback" th:errors="*{content}"></span>
+            </div>
+            <div class="form-group">
+                <label for="content">博客描述</label>
+                <textarea class="form-control" th:class="|form-control ${#fields.hasErrors('description') ? 'is-invalid' : ''}|" name="description" id="description" cols="30" rows="5" th:field="*{description}"></textarea>
+                <span th:if="${#fields.hasErrors('description')}" class="error invalid-feedback" th:errors="*{description}"></span>
+            </div>
+            <div class="form-group">
+                <label for="cover">封面图片</label>
+                <div>
+                    <input type="file" name="coverImage" id="cover" class="d-block">
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
