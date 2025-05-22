@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<div th:replace="~{ backend/app :: layout ('博客添加', _, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{ backend/app :: layout ('博客添加', ~{::#css}, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org">
+
+    <style id="css">
+        /* 覆盖 Cherry Markdown 全屏模式的 z-index */
+        .cherry.fullscreen {
+            z-index: 1050 !important; /* 确保 z-index 足够大，覆盖其他元素 */
+        }
+    </style>
     <div class="content-wrapper" id="main">
         <!-- Content Header (Page header) -->
         <section class="content-header">
