@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div th:replace="~{ backend/app :: layout ('修改博客', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{ backend/app :: layout ('博客修改', ~{backend/fragment::#css}, ~{::#main}, ~{backend/fragment::#js}) }" xmlns:th="http://www.thymeleaf.org">
     <div class="content-wrapper" id="main">
         <!-- Content Header (Page header) -->
         <section class="content-header">
