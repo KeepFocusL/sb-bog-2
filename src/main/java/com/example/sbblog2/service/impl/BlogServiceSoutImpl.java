@@ -3,7 +3,11 @@ package com.example.sbblog2.service.impl;
 import com.example.sbblog2.Blog;
 import com.example.sbblog2.BlogDTO;
 import com.example.sbblog2.service.BlogService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 //@Service
 public class BlogServiceSoutImpl implements BlogService {
@@ -11,5 +15,25 @@ public class BlogServiceSoutImpl implements BlogService {
     public Blog save(BlogDTO blogDTO) {
         System.out.println(blogDTO);
         return null;
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Page<Blog> searchAllByTitleContains(String keyword, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
+    @Override
+    public Optional<Blog> findById(Long id) {
+        return Optional.empty();
     }
 }

@@ -30,9 +30,6 @@ import java.util.UUID;
 public class BackendBlogController {
 
     @Autowired
-    BlogRepository blogRepository;
-
-    @Autowired
     BlogService blogService;
 
     @GetMapping("add")
@@ -91,12 +88,12 @@ public class BackendBlogController {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("id").descending());
 
         Page<Blog> pageContent;
-        if (keyword == null) {
-            pageContent = blogRepository.findAll(pageable);
-        } else {
+        if (keyword == null){
+            pageContent = blogService.findAll(pageable);
+        }else {
             // 如果搜索条件不为空，传值回前端
             model.addAttribute("keyword", keyword);
-            pageContent = blogRepository.searchAllByTitleContains(keyword, pageable);
+            pageContent = blogService.searchAllByTitleContains(keyword, pageable);
         }
 
         model.addAttribute("page", pageContent);
@@ -106,16 +103,16 @@ public class BackendBlogController {
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable Long id) {
-        blogRepository.deleteById(id);
+        blogService.deleteById(id);
         return "redirect:/backend/blog";
     }
 
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-        Optional<Blog> optionalBlog = blogRepository.findById(id);
-        if (optionalBlog.isEmpty()) {
+    public String edit(@PathVariable Long id , Model model) {
+        Optional<Blog> optionalBlog = blogService.findById(id);
+        if(optionalBlog.isEmpty()){
             throw new EntityNotFoundException();
-        } else {
+        }else {
             Blog blog = optionalBlog.get();
             model.addAttribute("blog", blog);
         }
@@ -124,13 +121,13 @@ public class BackendBlogController {
 
     @PostMapping("update")
     public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
-        uploadCover(file, blog);
-
-        blogService.save(blog);
-
         if (result.hasErrors()) {
             return "/backend/blog/edit";
         }
+
+        uploadCover(file, blog);
+
+        blogService.save(blog);
 
         System.out.println(blog);
 
