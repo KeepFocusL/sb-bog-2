@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
+                        .requestMatchers("/backend/**").hasRole("admin")
                         .anyRequest().authenticated()
                 )
         ;
