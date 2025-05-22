@@ -45,18 +45,18 @@ public class BackendBlogController {
     String uploadBasePath;
     @Value("${custom.upload.cover-path}")
     String coverPath;
+
     @PostMapping("add")
     public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
+        if (result.hasErrors()) {
+            return "/backend/blog/add";
+        }
+
         uploadCover(file, blog);
 
         blogService.save(blog);
 
         System.out.println(blog);
-
-
-        if (result.hasErrors()) {
-            return "/backend/blog/add";
-        }
 
         return "redirect:/backend/blog";
     }
@@ -91,9 +91,9 @@ public class BackendBlogController {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("id").descending());
 
         Page<Blog> pageContent;
-        if (keyword == null){
+        if (keyword == null) {
             pageContent = blogRepository.findAll(pageable);
-        }else {
+        } else {
             // 如果搜索条件不为空，传值回前端
             model.addAttribute("keyword", keyword);
             pageContent = blogRepository.searchAllByTitleContains(keyword, pageable);
@@ -111,11 +111,11 @@ public class BackendBlogController {
     }
 
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable Long id , Model model) {
+    public String edit(@PathVariable Long id, Model model) {
         Optional<Blog> optionalBlog = blogRepository.findById(id);
-        if(optionalBlog.isEmpty()){
+        if (optionalBlog.isEmpty()) {
             throw new EntityNotFoundException();
-        }else {
+        } else {
             Blog blog = optionalBlog.get();
             model.addAttribute("blog", blog);
         }
