@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/backend/**").hasRole("admin")
                         .anyRequest().authenticated()
                 )
+                .rememberMe(rm -> rm.rememberMeParameter("remember-me"))
         ;
         return http.build();
     }
