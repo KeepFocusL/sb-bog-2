@@ -1,6 +1,7 @@
 package com.example.sbblog2;
 
 import jakarta.persistence.*;
+import org.springframework.lang.Nullable;
 
 @Entity
 public class Blog {
@@ -13,6 +14,9 @@ public class Blog {
     @Column(columnDefinition = "TEXT")
     private String content;
     private String cover;
+
+    @Nullable
+    String description;
 
     public Blog() {
     }
