@@ -120,10 +120,16 @@ public class BackendBlogController {
     }
 
     @PostMapping("update")
-    public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, Blog blog) throws IOException {
-        uploadCover(file, blog);
+    public String update(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
+//        uploadCover(file, blog);
 
-        blogRepository.save(blog);
+//        blogRepository.save(blog);
+
+        if (result.hasErrors()) {
+            return "/backend/blog/edit";
+        }
+
+        System.out.println(blog);
 
         return "redirect:/backend/blog";
     }
