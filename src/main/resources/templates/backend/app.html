@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/backend/blog" th:class="|nav-link ${#strings.equals(requestURI, '/backend/blog') ? 'active' : ''}|">
+            <a href="/backend/blog" th:class="|nav-link ${#strings.startsWith(requestURI, '/backend/blog') ? 'active' : ''}|">
               <i class="nav-icon far fa-copy"></i>
               <p>
                 博客管理
