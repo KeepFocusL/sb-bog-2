@@ -83,6 +83,11 @@
                 // 定义光标出现在行首位置时出现的“提示工具栏”，默认为 ['h1', 'h2', 'h3', '|', 'checklist', 'quote', 'table', 'code']
                 float: false,
             },
+            callback: {
+                afterChange: (text, html) => {
+                    document.getElementById('content').value = text;
+                }
+            },
         });
     </script>
 </div>
