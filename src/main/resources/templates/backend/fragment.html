@@ -15,8 +15,7 @@
 <script type="module" id="js">
     const cherryInstance = new Cherry({
         id: 'markdown-container',
-        value: '',
-        toolbars: {
+        value: document.getElementById('content').value,        toolbars: {
             // 定义顶部工具栏
             //toolbar: ['bold','italic','strikethrough','|','color','header','ruby','|','list','panel','detail'],
             // 定义侧边栏，默认为空
