@@ -1,4 +1,25 @@
-<div th:replace="~{ app :: layout ('博客详情', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{ app :: layout ('博客详情', ~{::#css}, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org">
+
+    <div id="css">
+        <link rel="stylesheet" href="/build/assets/backend.css">
+        <style>
+            .cherry {
+                height: unset;
+                /*box-shadow: none;*/
+            }
+            .cherry-markdown a.anchor:before {
+                content: "";
+            }
+            .cherry-markdown img {
+                width: 100% !important;
+            }
+            .cherry-markdown video {
+                width: 100% !important;
+            }
+        </style>
+    </div>
+
+
     <main class="my-2rem" id="main">
         <article class="blog-show container">
             <div class="row">
@@ -6,34 +27,8 @@
                     <h1 th:text="${blog.title}">maven 加速，修改镜像源</h1>
                     <p class="meta text-muted mb-2rem"><a href="#">admin</a> - 2024-11-18 08:35:28</p>
                     <div class="animate__animated animate__fadeInLeft" th:text="${blog.content}">
-                        <div class="animate__animated animate__fadeInLeft">
-                            <h3 id="what">What</h3>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <h4 id="are">are</h4>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <h4 id="you">you</h4>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <h3 id="doing">Doing</h3>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <h4 id="now">now</h4>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
-                            <h4 id="blablabla">blablabla...</h4>
-                            <p>正文显示在这...</p>
-                            <p>正文显示在这...</p>
+                        <div class="animate__animated animate__fadeInLeft" th:data-content="${blog.content}" id="blog-content">
+
                         </div>
                     </div>
 
@@ -58,6 +53,30 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </article>
     </main>
+
+    <div id="js">
+        <script type="module" src="/build/assets/backend.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const cherry = new Cherry({
+                    id: 'blog-content',
+                    value: document.getElementById('blog-content').dataset.content,
+                    editor: {
+                        defaultModel: 'previewOnly',
+                    },
+                    toolbars: {
+                        // 打开侧边目录
+                        toc: {
+                            updateLocationHash: true,
+                            defaultModel: 'pure',
+                        },
+                    }
+                });
+            });
+        </script>
+    </div>
+
 </div>
