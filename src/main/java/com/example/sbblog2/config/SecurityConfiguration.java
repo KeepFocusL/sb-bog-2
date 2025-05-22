@@ -25,6 +25,10 @@ public class SecurityConfiguration {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                 )
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
                         .anyRequest().authenticated()
