@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,5 +28,8 @@ public class Blog {
     @Nullable
     String description;
 
+    LocalDateTime created_at;
+    @Nullable
+    LocalDateTime updated_at;
 
 }
