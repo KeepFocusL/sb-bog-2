@@ -88,6 +88,27 @@
                     document.getElementById('content').value = text;
                 }
             },
+            fileUpload: (file, callback) => {
+                const formData = new FormData();
+                formData.append('image', file);
+                fetch('/backend/images/uploadFromMd', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            callback(data.file.url);
+                        } else {
+                            console.error('图片上传失败:', data.message);
+                            alert('图片上传失败: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('图片上传出错:', error);
+                        alert('图片上传出错，请稍后重试');
+                    });
+            },
         });
     </script>
 </div>
