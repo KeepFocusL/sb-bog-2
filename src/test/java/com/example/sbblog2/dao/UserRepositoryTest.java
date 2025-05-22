@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
+
 @SpringBootTest
 public class UserRepositoryTest {
 
@@ -28,10 +30,11 @@ public class UserRepositoryTest {
         userRepository.save(user);
 
         // 通过 UserRepository 查询名称为 "XXX" 是否存在于数据库中
-        User userDb = userRepository.findFirstByName(name);
-        Assertions.assertNotNull(userDb);
+        Optional<User> ou = userRepository.findFirstByName(name);
+        boolean present = ou.isPresent();
+        Assertions.assertTrue(present);
 
         // 通过测试后 删除测试数据
-        userRepository.delete(userDb);
+        userRepository.delete(ou.get());
     }
 }
