@@ -45,8 +45,9 @@ public class BackendBlogController {
 
         System.out.println(blog);
 
+        model.addAttribute("blogTitle", blog.getTitle());
         if (blog.getTitle().length()<5){
-            model.addAttribute("tittle-error", "标题长度不能小于 5");
+            model.addAttribute("title", "标题长度不能小于 5");
         }
 
         return "/backend/blog/add";

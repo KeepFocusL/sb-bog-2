@@ -32,9 +32,9 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title">博客标题</label>
-                            <input type="text" class="form-control is-invalid" id="title" name="title"
-                                   placeholder="请输入博客标题">
-                            <span id="tittle-error" class="error invalid-feedback">tittle length to sort</span>
+                            <input type="text" class="form-control is-invalid" th:class="|form-control ${#strings.isEmpty(title)? 'is-invalid':''}|" id="title" name="title"
+                                   placeholder="请输入博客标题" th:value="${blogTitle}">
+                            <span id="title-error" class="error invalid-feedback" th:if="${#strings.isEmpty(title)}">tittle length to sort</span>
                         </div>
                         <div class="form-group">
                             <label for="content">博客内容</label>
