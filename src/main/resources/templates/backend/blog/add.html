@@ -28,22 +28,23 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="/backend/blog/add" method="post" enctype="multipart/form-data">
+                <form action="/backend/blog/add" method="post" enctype="multipart/form-data" th:object="${blog}">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title">博客标题</label>
-                            <input type="text" class="form-control is-invalid" th:class="|form-control ${#strings.isEmpty(title)? 'is-invalid':''}|" id="title" name="title"
-                                   placeholder="请输入博客标题" th:value="${blogTitle}">
-                            <span id="title-error" class="error invalid-feedback" th:if="${#strings.isEmpty(title)}">tittle length to sort</span>
+                            <input th:field="*{title}" type="text" class="form-control" th:class="|form-control ${#fields.hasErrors('title') ? 'is-invalid' : ''}|" id="title" name="title" placeholder="请输入博客标题">
+                            <span th:if="${#fields.hasErrors('title')}" class="error invalid-feedback" th:errors="*{title}"></span>
                         </div>
                         <div class="form-group">
                             <label for="content">博客内容</label>
-                            <textarea class="form-control d-none" name="content" id="content" cols="30" rows="10"></textarea>
-                            <div id="markdown-container" style="height:600px"></div>
+                            <textarea class="form-control d-none" name="content" id="content" cols="30" rows="10" th:utext="*{content}"></textarea>
+                            <div id="markdown-container" style="height:600px" th:class="${#fields.hasErrors('content') ? 'form-control is-invalid' : ''}"></div>
+                            <span th:if="${#fields.hasErrors('content')}" class="error invalid-feedback" th:errors="*{content}"></span>
                         </div>
                         <div class="form-group">
                             <label for="content">博客描述</label>
-                            <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                            <textarea class="form-control" th:class="|form-control ${#fields.hasErrors('description') ? 'is-invalid' : ''}|" name="description" id="description" cols="30" rows="5" th:field="*{description}"></textarea>
+                            <span th:if="${#fields.hasErrors('description')}" class="error invalid-feedback" th:errors="*{description}"></span>
                         </div>
                         <div class="form-group">
                             <label for="cover">封面图片</label>

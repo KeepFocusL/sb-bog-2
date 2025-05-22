@@ -1,9 +1,11 @@
 package com.example.sbblog2.backend;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import com.example.sbblog2.Blog;
 import com.example.sbblog2.BlogDTO;
 import com.example.sbblog2.BlogRepository;
+import org.hibernate.annotations.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +32,8 @@ public class BackendBlogController {
     BlogRepository blogRepository;
 
     @GetMapping("add")
-    public String add() {
+    public String add(Model model) {
+        model.addAttribute("blog", new Blog());
         return "backend/blog/add";
     }
 
@@ -38,19 +42,20 @@ public class BackendBlogController {
     @Value("${custom.upload.cover-path}")
     String coverPath;
     @PostMapping("add")
-    public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, BlogDTO blog, Model model) throws IOException {
+    public String save(@RequestParam(value = "coverImage", required = false) MultipartFile file, @Valid @ModelAttribute("blog") BlogDTO blog, BindingResult result) throws IOException {
 //        uploadCover(file, blog);
 
 //        blogRepository.save(blog);
 
+
         System.out.println(blog);
 
-        model.addAttribute("blogTitle", blog.getTitle());
-        if (blog.getTitle().length()<5){
-            model.addAttribute("title", "标题长度不能小于 5");
+
+        if (result.hasErrors()) {
+            return "/backend/blog/add";
         }
 
-        return "/backend/blog/add";
+        return "redirect:/backend/blog";
     }
 
     private void uploadCover(MultipartFile file, Blog blog) throws IOException {
