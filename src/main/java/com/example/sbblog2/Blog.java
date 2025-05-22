@@ -21,11 +21,12 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(Long id, String title, String content, String cover) {
+    public Blog(Long id, String title, String content, String cover,String description) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.cover = cover;
+        this.description = description;
     }
 
     public Long getId() {
@@ -67,6 +68,7 @@ public class Blog {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", cover='" + cover + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
