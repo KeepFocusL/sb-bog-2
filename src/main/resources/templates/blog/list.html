@@ -11,7 +11,7 @@
                                 <div class="small text-muted">
                                     <a href="#">admin</a>
                                     <span> - </span>
-                                    <span>2024-11-18 08:35:28</span>
+                                    <span th:text="${#temporals.format(blog.created_at, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                 </div>
                             </div>
                             <div class="col-5">
