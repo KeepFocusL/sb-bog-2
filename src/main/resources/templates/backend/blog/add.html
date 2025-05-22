@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <div th:replace="~{ backend/app :: layout ('博客添加', _, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org">
-    <!-- Content Wrapper. Contains page content -->
-    <div id="main" class="content-wrapper">
+    <div class="content-wrapper" id="main">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -33,7 +32,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title">博客标题</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入博客标题">
+                            <input type="text" class="form-control" id="title" name="title"
+                                   placeholder="请输入博客标题">
                         </div>
                         <div class="form-group">
                             <label for="content">博客内容</label>
@@ -59,14 +59,23 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
     <script type="module" id="js">
         const cherryInstance = new Cherry({
             id: 'markdown-container',
             value: '',
+            toolbars: {
+                // 定义顶部工具栏
+                //toolbar: ['bold','italic','strikethrough','|','color','header','ruby','|','list','panel','detail'],
+                // 定义侧边栏，默认为空
+                sidebar: ['theme'],
+                // 定义顶部右侧工具栏，默认为空
+                toolbarRight: ['fullScreen', 'export'],
+                // 定义选中文字时弹出的“悬浮工具栏”，默认为 ['bold', 'italic', 'underline', 'strikethrough', 'sub', 'sup', 'quote', '|', 'size', 'color']
+                bubble: false,
+                // 定义光标出现在行首位置时出现的“提示工具栏”，默认为 ['h1', 'h2', 'h3', '|', 'checklist', 'quote', 'table', 'code']
+                float: false,
+            },
         });
     </script>
 </div>
-
-
