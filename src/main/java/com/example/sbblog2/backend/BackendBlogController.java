@@ -78,8 +78,7 @@ public class BackendBlogController {
     public String list(Model model,
                        @RequestParam("page") Optional<Integer> page,
                        @RequestParam("size") Optional<Integer> size,
-                       @RequestParam(value = "keyword", required = false) String keyword,
-                       HttpServletRequest request) {
+                       @RequestParam(value = "keyword", required = false) String keyword) {
         // 如果没有则赋值为 orElse 的值
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -96,7 +95,6 @@ public class BackendBlogController {
         }
 
         model.addAttribute("page", pageContent);
-        model.addAttribute("requestURI", request.getRequestURI());
 
         return "backend/blog/list";
     }

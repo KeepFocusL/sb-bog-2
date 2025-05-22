@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BackendIndexController {
 
     @GetMapping()
-    public String index(Model model,
-                        HttpServletRequest request) {
-        model.addAttribute("requestURI", request.getRequestURI());
+    public String index() {
         return "backend/blank";
     }
 }
