@@ -1,12 +1,12 @@
 package com.example.sbblog2.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,4 +20,7 @@ public class Role {
     String name;
     String description;
     int sort;
+
+    @ManyToMany
+    Set<Permission> permissions = new HashSet<>();
 }
