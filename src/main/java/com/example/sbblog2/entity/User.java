@@ -25,6 +25,6 @@ public class User {
     private LocalDateTime createdAt;
     private boolean enabled;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     Set<Role> roles = new HashSet<>();
 }
