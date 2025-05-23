@@ -22,5 +22,10 @@ public class Role {
     int sort;
 
     @ManyToMany
+    @JoinTable(
+            name = "role_permissions",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "permissions_id", referencedColumnName = "id")
+    )
     Set<Permission> permissions = new HashSet<>();
 }
