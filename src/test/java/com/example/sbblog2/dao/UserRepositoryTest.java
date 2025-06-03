@@ -1,5 +1,6 @@
 package com.example.sbblog2.dao;
 
+import com.example.sbblog2.entity.Permission;
 import com.example.sbblog2.entity.Role;
 import com.example.sbblog2.entity.User;
 import org.junit.jupiter.api.Assertions;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -56,5 +58,17 @@ public class UserRepositoryTest {
         Role role = roles.iterator().next();
         String actualName = role.getName();
         Assertions.assertEquals(roleName, actualName);
+
+        // 测试角色跟权限的关系
+        Set<Permission> permissions = role.getPermissions();
+        Assertions.assertEquals(3, permissions.size());
+
+        Set<String> permissionNames = new HashSet<>();
+        for (Permission permission : permissions) {
+            permissionNames.add(permission.getName());
+        }
+        Assertions.assertTrue(permissionNames.contains("/backend"));
+        Assertions.assertTrue(permissionNames.contains("/backend/blog"));
+        Assertions.assertTrue(permissionNames.contains("/backend/user"));
     }
 }
