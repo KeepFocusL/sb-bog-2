@@ -1,19 +1,20 @@
 package com.example.sbblog2.config;
 
+import com.example.sbblog2.service.JpaUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfiguration {
 
+    @Autowired
+    JpaUserDetailsService jpaUserDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -21,7 +22,7 @@ public class SecurityConfiguration {
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/", true)
+                                .defaultSuccessUrl("/" , true)
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                 )
@@ -30,7 +31,7 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/")
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
+                        .requestMatchers( "/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
                         .requestMatchers("/backend/**").hasRole("admin")
                         .anyRequest().authenticated()
                 )
@@ -41,20 +42,11 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("user")
-                .build();
-
-        UserDetails admin = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("password"))
-                .roles("admin", "user")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(jpaUserDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
 
     @Bean
