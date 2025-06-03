@@ -1,5 +1,6 @@
 package com.example.sbblog2.dao;
 
+import com.example.sbblog2.entity.Role;
 import com.example.sbblog2.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
+import java.util.Set;
 
 @SpringBootTest
 public class UserRepositoryTest {
@@ -36,5 +38,23 @@ public class UserRepositoryTest {
 
         // 通过测试后 删除测试数据
         userRepository.delete(ou.get());
+    }
+
+    @Test
+    void rbac(){
+        // admin 用户具有 admin 角色
+        // admin 角色具有两个权限
+        String roleName = "admin";
+        Optional<User> ou = userRepository.findFirstByName(roleName);
+        Assertions.assertTrue(ou.isPresent());
+
+        User user = ou.get();
+        Set<Role> roles = user.getRoles();
+        int actual = roles.size();
+        Assertions.assertEquals(1, actual);
+
+        Role role = roles.iterator().next();
+        String actualName = role.getName();
+        Assertions.assertEquals(roleName, actualName);
     }
 }
