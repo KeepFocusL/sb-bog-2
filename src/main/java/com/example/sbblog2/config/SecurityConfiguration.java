@@ -31,9 +31,9 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/")
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers( "/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
+                        // .requestMatchers( "/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
                         .requestMatchers("/backend/**").hasRole("admin")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .rememberMe(rm -> rm.rememberMeParameter("remember-me"))
                 .csrf(csrf -> csrf.disable())
