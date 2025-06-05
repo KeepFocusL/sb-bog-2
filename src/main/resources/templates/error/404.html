@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>404 错误</title>
-</head>
-<body>
-<p th:text="${message}"></p>
-
-<p th:text="${error}" th:if="${error}"></p>
-</body>
-</html>
+<div th:replace="~{ app :: layout ('404 - 页面未找到', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
+    <main id="main" class="my-2rem">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6 text-center">
+                    <h1 class="display-1">404</h1>
+                    <h2 class="mb-4">页面未找到</h2>
+                    <p class="text-muted mb-4" th:text="${message}">抱歉，您访问的页面不存在。</p>
+                    <p class="text-muted small mb-4" th:if="${error}" th:text="${error}">错误详情</p>
+                    <a href="/" class="btn btn-primary">返回首页</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

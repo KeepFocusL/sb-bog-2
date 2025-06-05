@@ -1,11 +1,11 @@
-<div th:replace="~{ app :: layout ('500 - 服务器错误', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{ app :: layout ('400 - 请求错误', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org">
     <main id="main" class="my-2rem">
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-6 text-center">
-                    <h1 class="display-1">500</h1>
-                    <h2 class="mb-4">服务器内部错误</h2>
-                    <p class="text-muted mb-4" th:text="${message}">抱歉，服务器出现了一些问题。请稍后再试。</p>
+                    <h1 class="display-1">400</h1>
+                    <h2 class="mb-4">请求错误</h2>
+                    <p class="text-muted mb-4" th:text="${message}">请求处理失败</p>
                     <p class="text-muted small mb-4" th:if="${error}" th:text="${error}">错误详情</p>
                     <a href="/" class="btn btn-primary">返回首页</a>
                 </div>

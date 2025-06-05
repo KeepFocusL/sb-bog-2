@@ -29,13 +29,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a th:class="|nav-link d-flex align-items-center ${#strings.equals(requestURI, '/resume') ? 'active' : ''}|" aria-current="page" href="#">
+                    <a th:class="|nav-link d-flex align-items-center ${#strings.equals((requestURI ?: ''), '/resume') ? 'active' : ''}|" aria-current="page" href="#">
                         <i class="bi bi-person-bounding-box"></i>
                         Resume
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:class="|nav-link d-flex align-items-center ${#strings.startsWith(requestURI, '/blog') ? 'active' : ''}|" href="/blog">
+                    <a th:class="|nav-link d-flex align-items-center ${#strings.startsWith((requestURI ?: ''), '/blog') ? 'active' : ''}|" href="/blog">
                         <i class="bi bi-layout-text-window"></i>
                         Blog
                     </a>
