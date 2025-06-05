@@ -4,10 +4,15 @@ import com.example.sbblog2.dto.PasswordResetEmailDTO;
 import com.example.sbblog2.dto.UserDTO;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +23,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
 @RequestMapping("user")
 public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JavaMailSender sender;
 
     @GetMapping("dashboard")
     @PreAuthorize("isAuthenticated()")
@@ -33,7 +43,7 @@ public class UserController {
 
     @GetMapping("register")
     public String enroll(Model model){
-        model.addAttribute("user",new UserDTO());
+        model.addAttribute("user", new UserDTO());
         return "user/register";
     }
 
@@ -42,6 +52,7 @@ public class UserController {
         // 根据邮箱查询数据库
         User existingUser =  userService.findByEmail(userDTO.getEmail());
         if (existingUser != null){
+            // errorCode -> 自己定义
             result.rejectValue("email", "exist", "该邮箱已被注册");
         }
 
@@ -53,6 +64,7 @@ public class UserController {
 
         // 帮该用户自动登录
         httpServletRequest.login(userDTO.getEmail(), userDTO.getPassword());
+
         return "redirect:/";
     }
 
@@ -67,7 +79,7 @@ public class UserController {
             @Valid @ModelAttribute("passwordResetEmail") PasswordResetEmailDTO passwordResetEmailDTO,
             BindingResult result,
             RedirectAttributes redirectAttributes
-    ){
+    ) throws Exception {
         // 检查邮箱是否存在
         User existingUser = userService.findByEmail(passwordResetEmailDTO.getEmail());
         if (existingUser == null){
@@ -79,7 +91,22 @@ public class UserController {
         }
 
         // todo: 发送邮件
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(new InternetAddress("1281438594@qq.com", "客服"));
+        helper.setSubject("重置密码");
+        helper.setTo(passwordResetEmailDTO.getEmail());
+        helper.setText("""
+                <html>
+                    <body>
+                        <p>点击以下链接进行密码重置</p>
+                        <a href='http://localhost:8080'>重置密码</a>
+                        <p>链接将在 30 分钟后失效，请尽快操作</p>
+                    </body>
+                </html>
+                """);
 
+        sender.send(message);
         redirectAttributes.addFlashAttribute("success", "密码重置邮件已发送，请注意查收");
 
         return "redirect:/user/password-reset";
