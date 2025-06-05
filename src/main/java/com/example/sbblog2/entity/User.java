@@ -6,7 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,4 +34,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName="id")
     )
     Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Blog> blogs = new ArrayList<>();
 }

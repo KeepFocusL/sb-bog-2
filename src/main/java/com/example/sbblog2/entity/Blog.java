@@ -32,4 +32,7 @@ public class Blog {
     @Nullable
     LocalDateTime updated_at;
 
+    @ManyToOne
+    // @JoinColumn(name = "user_id", referencedColumnName = "id")
+    User user;
 }
