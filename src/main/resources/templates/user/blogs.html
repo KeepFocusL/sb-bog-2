@@ -34,7 +34,12 @@
           </div>
           <div class="card-body">
             <div th:if="${msg}" th:text="${msg}" class="alert alert-success"></div>
-            <a href="#" th:href="@{/user/create-your-blog}" class="text-primary">申请开通博客</a>
+            <a sec:authorize="hasAnyRole('admin', 'editor')" class="dropdown-item" href="#" th:href="@{/backend/blog}">
+              博客管理
+            </a>
+            <a sec:authorize="!hasAnyRole('admin', 'editor')" class="dropdown-item" href="#" th:href="@{/user/create-your-blog}">
+              申请开通博客
+            </a>
           </div>
         </div>
       </div>
