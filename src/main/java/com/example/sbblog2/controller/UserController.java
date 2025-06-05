@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("user")
-@PreAuthorize("isAuthenticated()")
 public class UserController {
 
     @GetMapping("dashboard")
+    @PreAuthorize("isAuthenticated()")
     public String dashboard(){
         return "user/dashboard";
+    }
+
+    @GetMapping("register")
+    public String enroll(){
+        return "user/register";
     }
 }
