@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>用户注册</title>
-</head>
-<body>
-用户的注册界面
-</body>
-</html>
+<div th:replace="~{ app :: layout ('用户注册', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <div id="main" class="container my-2rem">
+        <form action="" th:action="@{/user/register}" method="post">
+            <button type="submit">注册</button>
+        </form>
+    </div>
+</div>
