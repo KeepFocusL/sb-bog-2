@@ -17,10 +17,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.UnsupportedEncodingException;
@@ -31,6 +29,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private View error;
 
     @Autowired
     JavaMailSender sender;
@@ -118,7 +119,14 @@ public class UserController {
     }
 
     @GetMapping("do-password-reset")
-    public String showPasswordResetForm(){
+    public String showPasswordResetForm(@RequestParam String token, Model model) {
+        // 获取 token 进行校验
+        if ("xxx123xxx_0".equals(token)) {
+            model.addAttribute("error", "token 已过期");
+        } else if (!"xxx123xxx".equals(token)) {
+            model.addAttribute("error", "token 不存在");
+        }
+
         return "user/do-password-reset";
     }
 }
