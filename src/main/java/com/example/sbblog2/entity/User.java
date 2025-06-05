@@ -6,10 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -37,4 +34,13 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     List<Blog> blogs = new ArrayList<>();
+
+    public Set<Permission> getPermissions() {
+        List<Permission> allPermissions = new ArrayList<>();
+        for (Role role : this.roles) {
+            allPermissions.addAll(role.getPermissions());
+        }
+        allPermissions.sort(Comparator.comparingInt(Permission::getSort));
+        return new LinkedHashSet<>(allPermissions);
+    }
 }
