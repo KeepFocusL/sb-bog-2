@@ -1,4 +1,4 @@
-<div th:replace="~{ app :: layout ('用户注册', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<div th:replace="~{ app :: layout ('用户注册', _, ~{::#main}, ~{::#js}) }" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div id="main" class="container my-2rem">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -17,7 +17,7 @@
                         <form method="POST" action="#" th:action="@{/user/register}" th:object="${user}">
                             <div class="row mb-3 justify-content-center">
                                 <div class="col-lg-6">
-                                    <input placeholder="邮箱" th:field="*{email}" id="email" type="email" class="form-control" th:class="|form-control ${#fields.hasErrors('email') ? 'is-invalid' : ''}|" name="email" required autofocus>
+                                    <input placeholder="邮箱" th:field="*{email}" id="email" type="email" class="form-control" th:class="|form-control ${#fields.hasErrors('email') ? 'is-invalid' : ''}|" name="email" required autofocus oninput="fillUsernameFromEmail()">
                                     <span th:if="${#fields.hasErrors('email')}" class="invalid-feedback" role="alert"><strong th:errors = "*{email}"></strong></span>
                                 </div>
                             </div>
@@ -53,4 +53,15 @@
             </div>
         </div>
     </div>
+
+    <script id="js">
+        function fillUsernameFromEmail(){
+            let emailInput = document.getElementById('email');
+            let nameInput = document.getElementById('name');
+
+            let emailValue = emailInput.value;
+            let usesrname = emailValue.split("@")[0];
+            nameInput.value = usesrname;
+        }
+    </script>
 </div>
