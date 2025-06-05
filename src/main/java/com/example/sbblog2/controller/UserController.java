@@ -190,7 +190,13 @@ public class UserController {
     @GetMapping("create-your-blog")
     @PreAuthorize("isAuthenticated()")
     public String createYourBlog(Model model){
-        model.addAttribute("msg", "恭喜，博客开通成功");
+        boolean 具有admin或者editor角色 = false;
+        if (具有admin或者editor角色) {
+            model.addAttribute("msg", "您已经开通过了，可以直接发布博客");
+        } else {
+            // 给当前用户分配 editor 角色
+            model.addAttribute("msg", "恭喜！博客开通成功");
+        }
         return "user/blogs";
     }
 }
