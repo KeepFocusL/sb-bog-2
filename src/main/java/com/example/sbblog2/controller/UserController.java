@@ -105,7 +105,7 @@ public class UserController {
                 <html>
                     <body>
                         <p>点击以下链接进行密码重置</p>
-                        <a href='%s/user/do-password-reset'>重置密码</a>
+                        <a href='%s/user/do-password-reset?token=xxx123xxx'>重置密码</a>
                         <p>链接将在 30 分钟后失效，请尽快操作</p>
                     </body>
                 </html>
