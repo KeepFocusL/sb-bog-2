@@ -185,4 +185,10 @@ public class UserController {
     public String blogs(){
         return "user/blogs";
     }
+
+    @GetMapping("create-your-blog")
+    public String createYourBlog(Model model){
+        model.addAttribute("msg", "恭喜，博客开通成功");
+        return "user/blogs";
+    }
 }
