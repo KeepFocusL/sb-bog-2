@@ -139,11 +139,12 @@ public class UserController {
 
     @GetMapping("do-password-reset")
     public String showPasswordResetForm(@RequestParam String token, Model model) {
-        // 获取 token 进行校验
-        if ("xxx123xxx_0".equals(token)) {
-            model.addAttribute("error", "token 已过期");
-        } else if (!"xxx123xxx".equals(token)) {
+
+        PasswordResetToken passwordResetToken = passwordResetTokenService.findFirstByToken(token);
+        if (passwordResetToken == null) {
             model.addAttribute("error", "token 不存在");
+        } else if (passwordResetToken.getExpirationDate().isBefore(LocalDateTime.now())) {
+            model.addAttribute("error", "token 已过期");
         }
 
         return "user/do-password-reset";
