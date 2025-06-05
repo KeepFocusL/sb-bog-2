@@ -7,6 +7,7 @@ import com.example.sbblog2.entity.PasswordResetToken;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.PasswordResetTokenService;
 import com.example.sbblog2.service.UserService;
+import com.example.sbblog2.util.UserUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -190,8 +191,7 @@ public class UserController {
     @GetMapping("create-your-blog")
     @PreAuthorize("isAuthenticated()")
     public String createYourBlog(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws ServletException {
-        boolean 具有admin或者editor角色 = false;
-        if (具有admin或者editor角色) {
+        if (UserUtils.isEditor() || UserUtils.isAdmin()) {
             model.addAttribute("msg", "您已经开通过了，可以直接发布博客");
             return "user/blogs";
         } else {

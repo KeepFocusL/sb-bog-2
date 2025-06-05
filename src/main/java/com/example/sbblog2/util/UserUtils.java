@@ -18,4 +18,14 @@ public class UserUtils {
         SecurityUser currentSecurityUser = getCurrentSecurityUser();
         return currentSecurityUser == null ? null : currentSecurityUser.getUser();
     }
+
+    public static Boolean isAdmin() {
+        return getCurrentSecurityUser().getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_admin"));
+    }
+
+    public static Boolean isEditor() {
+        return getCurrentSecurityUser().getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_editor"));
+    }
 }
