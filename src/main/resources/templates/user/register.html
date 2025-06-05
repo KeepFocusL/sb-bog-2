@@ -1,6 +1,10 @@
 <div th:replace="~{ app :: layout ('用户注册', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div id="main" class="container my-2rem">
         <form action="" th:action="@{/user/register}" method="post">
+            <input id="email" placeholder="邮箱" type="text" name="email" value="" required autofocus>
+            <input id="name" placeholder="用户名" type="text" name="password" required>
+            <input id="password" placeholder="密码" type="password" name="password" required>
+
             <button type="submit">注册</button>
         </form>
     </div>
