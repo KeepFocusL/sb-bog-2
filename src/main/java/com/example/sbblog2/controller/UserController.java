@@ -33,14 +33,13 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String register(@Valid @ModelAttribute("user") UserDto userDTO, BindingResult result, Model model){
-        System.out.println(userDTO);
+    public String register(@Valid @ModelAttribute("user") UserDto userDTO, BindingResult result,Model model){
+
         if (result.hasErrors()){
-            model.addAttribute("user",userDTO);
-            System.out.println("hasErrors");
             return "user/register";
         }
         userService.save();
         return "redirect:/";
     }
 }
+
