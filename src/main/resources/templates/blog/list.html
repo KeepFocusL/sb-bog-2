@@ -9,7 +9,7 @@
                             <div class="col-7">
                                 <h2 class="mb-2 h5"><a href="/blog/show" th:href="@{'/blog/' + ${blog.id}}" th:text="${blog.title}">||||||||||||||||||||||||||||||</a></h2>
                                 <div class="small text-muted">
-                                    <a href="#">admin</a>
+                                    <a href="#" th:text="${blog.user.name}">admin</a>
                                     <span> - </span>
                                     <span th:text="${#temporals.format(blog.created_at, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                 </div>

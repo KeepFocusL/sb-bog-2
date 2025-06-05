@@ -44,6 +44,7 @@
                                         <th>ID</th>
                                         <th>Title</th>
                                         <th>CreatedAt</th>
+                                        <th>User</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -52,6 +53,7 @@
                                         <th th:text="${blog.id}">blog.id</th>
                                         <td><a th:href="@{'/blog/' + ${blog.id}}" target="_blank" th:text="${blog.title}">blog.title</a></td>
                                         <td th:text="${#temporals.format(blog.created_at, 'yyyy-MM-dd HH:mm:ss')}">yyyy-MM-dd HH:mm:ss</td>
+                                        <td th:text="${blog.user.name}">User</td>
                                         <td class="center">
                                             <a href="#" th:href="@{'/backend/blog/edit/' + ${blog.id}}" class="text-sm">
                                                 <i class="fas fa-edit"></i>
