@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         // .requestMatchers( "/login", "/assets/**", "/build/**", "/img/**", "/vendor/**").permitAll()
-                        .requestMatchers("/backend/**").hasRole("admin")
+                        .requestMatchers("/backend/**").hasAnyRole("admin", "editor")
                         .anyRequest().permitAll()
                 )
                 .rememberMe(rm -> rm.rememberMeParameter("remember-me"))

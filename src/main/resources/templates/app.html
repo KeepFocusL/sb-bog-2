@@ -49,7 +49,7 @@
                         <a class="dropdown-item" href="#" th:href="@{/user/dashboard}">
                             个人主页
                         </a>
-                        <a sec:authorize="hasRole('admin')" class="dropdown-item" href="#" th:href="@{/backend}">
+                        <a sec:authorize="hasAnyRole('admin', 'editor')" class="dropdown-item" href="#" th:href="@{/backend}">
                             后台管理
                         </a>
                         <a class="dropdown-item" href="#"
