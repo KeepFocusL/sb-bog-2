@@ -1,6 +1,7 @@
 package com.example.sbblog2.service.impl;
 
 import com.example.sbblog2.dao.UserRepository;
+import com.example.sbblog2.dto.UserDTO;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,16 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void save() {
+    public void save(UserDTO userDTO) {
         System.out.println("UserServiceImpl.save");
-
         User user = new User();
-        user.setName("name_" + System.currentTimeMillis());
-        user.setEmail(System.currentTimeMillis() + "@example.com");
-        user.setPassword(passwordEncoder.encode("123456"));
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
-
     }
 
     @Override

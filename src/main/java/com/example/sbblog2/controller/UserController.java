@@ -1,6 +1,6 @@
 package com.example.sbblog2.controller;
 
-import com.example.sbblog2.dto.UserDto;
+import com.example.sbblog2.dto.UserDTO;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
 import jakarta.validation.Valid;
@@ -29,12 +29,12 @@ public class UserController {
 
     @GetMapping("register")
     public String enroll(Model model){
-        model.addAttribute("user",new UserDto());
+        model.addAttribute("user",new UserDTO());
         return "user/register";
     }
 
     @PostMapping("register")
-    public String register(@Valid @ModelAttribute("user") UserDto userDTO, BindingResult result){
+    public String register(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult result){
         // 根据邮箱查询数据库
         User existingUser =  userService.findByEmail(userDTO.getEmail());
         if (existingUser != null){
@@ -44,7 +44,7 @@ public class UserController {
         if (result.hasErrors()){
             return "user/register";
         }
-        userService.save();
+        userService.save(userDTO);
         return "redirect:/";
     }
 }
