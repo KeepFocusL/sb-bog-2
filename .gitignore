@@ -41,3 +41,4 @@ src/main/resources/static/build
 upload
 
 application-dev.properties
+application-test.properties

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class UserControllerTest {
 
     @Autowired
@@ -27,6 +29,24 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("未登录的情况下访问 /user/dashboard 会被自动跳转到 /login")
+    void userDashboardWithoutLogin() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/user/dashboard"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+    }
+
+    @Test
+    @WithUserDetails(userDetailsServiceBeanName = "jpaUserDetailsService" , value = "user@example.com")
+    void userDashboardWithLogin() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/user/dashboard"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("个人资料")))
+                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("user@example.com")))
+                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("用户名")))
+        ;
+    }
+
+    @Test
     void userRegisterWithExistingEmail() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/user/register")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -35,7 +55,21 @@ public class UserControllerTest {
                         .param("password", "password")
                 )
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.model().attributeHasFieldErrorCode("user", "email", "exist"))
+                .andExpect(MockMvcResultMatchers.model().attributeHasFieldErrorCode("user",  "email", "exist"))
         ;
+
+    }
+
+    @Test
+    void register() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/user/register")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("email", System.currentTimeMillis() + "@example.com")
+                        .param("name", System.currentTimeMillis() + "test")
+                        .param("password", "password")
+                )
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+        ;
+
     }
 }
