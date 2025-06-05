@@ -4,6 +4,7 @@ import com.example.sbblog2.entity.Blog;
 import com.example.sbblog2.dto.BlogDTO;
 import com.example.sbblog2.dao.BlogRepository;
 import com.example.sbblog2.service.BlogService;
+import com.example.sbblog2.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,7 @@ public class BlogServiceImpl implements BlogService {
         blog.setContent(blogDTO.getContent());
         blog.setDescription(blogDTO.getDescription());
         blog.setCover(blogDTO.getCover());
+        blog.setUser(UserUtils.getCurrentUser());
 
         // 存入数据库
         return blogRepository.save(blog);
