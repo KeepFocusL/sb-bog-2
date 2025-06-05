@@ -106,6 +106,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/backend/user" th:class="|nav-link ${#strings.startsWith(requestURI, '/backend/user') ? 'active' : ''}|">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                用户管理
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
