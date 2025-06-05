@@ -111,4 +111,9 @@ public class UserController {
 
         return "redirect:/user/password-reset";
     }
+
+    @GetMapping("do-password-reset")
+    public String showPasswordResetForm(){
+        return "user/do-password-reset";
+    }
 }
