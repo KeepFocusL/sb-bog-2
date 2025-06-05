@@ -109,7 +109,7 @@ public class UserController {
                         <p>链接将在 30 分钟后失效，请尽快操作</p>
                     </body>
                 </html>
-                """.formatted(baseUrl));
+                """.formatted(baseUrl), true);
 
         sender.send(message);
         redirectAttributes.addFlashAttribute("success", "密码重置邮件已发送，请注意查收");
