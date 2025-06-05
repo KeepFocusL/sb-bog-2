@@ -43,12 +43,22 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> findAll(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+        // 如果当前登录用户是 admin，查询所有
+        if (UserUtils.isAdmin()){
+            return blogRepository.findAll(pageable);
+        } else {
+            // 如果不是 admin 则查询属于自己的博客
+            return blogRepository.findBlogsByUserId(UserUtils.getCurrentUser().getId(), pageable);
+        }
     }
 
     @Override
     public Page<Blog> searchAllByTitleContains(String keyword, Pageable pageable) {
-        return blogRepository.searchAllByTitleContains(keyword, pageable);
+        if (UserUtils.isAdmin()){
+            return blogRepository.searchAllByTitleContains(keyword, pageable);
+        } else {
+            return blogRepository.findBlogsByUserIdAndTitleContains(UserUtils.getCurrentUser().getId(),keyword, pageable);
+        }
     }
 
     @Override
@@ -61,3 +71,4 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findById(id);
     }
 }
+
