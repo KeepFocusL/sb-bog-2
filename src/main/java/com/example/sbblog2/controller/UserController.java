@@ -1,5 +1,6 @@
 package com.example.sbblog2.controller;
 
+import com.example.sbblog2.dto.PasswordResetEmailDTO;
 import com.example.sbblog2.dto.UserDTO;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
@@ -55,7 +56,27 @@ public class UserController {
     }
 
     @GetMapping("password-reset")
-    public String showPasswordResetForm(){
+    public String showPasswordResetForm(Model model){
+        model.addAttribute("passwordResetEmail", new PasswordResetEmailDTO());
         return "user/password-reset";
+    }
+
+    @PostMapping("password-reset")
+    public String passwordReset(
+            @Valid @ModelAttribute("passwordResetEmail") PasswordResetEmailDTO passwordResetEmailDTO,
+            BindingResult result){
+        // 检查邮箱是否存在
+        User existingUser = userService.findByEmail(passwordResetEmailDTO.getEmail());
+        if (existingUser == null){
+            result.rejectValue("email", "non-existent", "该邮箱不存在");
+        }
+
+        if (result.hasErrors()){
+            return "user/password-reset";
+        }
+
+        // todo: 发送邮件
+
+        return "redirect:/user/password-reset";
     }
 }
