@@ -175,6 +175,9 @@ public class UserController {
         user.setPassword(passwordResetDTO.getPassword());
         userService.updatePassword(user);
 
+        // 通过 Service 更新数据库中的 expiration_date 属性 为 now
+        passwordResetTokenService.expireThisToken(token);
+
         return "redirect:/login";
 
     }
