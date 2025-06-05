@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,5 +31,13 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
+
+    }
+
+    @Override
+    public User findByEmail(String email){
+        Optional<User> firstByEmail = userRepository.findFirstByEmail(email);
+        User user = firstByEmail.orElse(null);
+        return user;
     }
 }

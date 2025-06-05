@@ -1,6 +1,7 @@
 package com.example.sbblog2.controller;
 
 import com.example.sbblog2.dto.UserDto;
+import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,12 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public String register(@Valid @ModelAttribute("user") UserDto userDTO, BindingResult result,Model model){
+    public String register(@Valid @ModelAttribute("user") UserDto userDTO, BindingResult result){
+        // 根据邮箱查询数据库
+        User existingUser =  userService.findByEmail(userDTO.getEmail());
+        if (existingUser != null){
+            result.rejectValue("email", "exist", "该邮箱已被注册");
+        }
 
         if (result.hasErrors()){
             return "user/register";
@@ -42,4 +48,3 @@ public class UserController {
         return "redirect:/";
     }
 }
-
