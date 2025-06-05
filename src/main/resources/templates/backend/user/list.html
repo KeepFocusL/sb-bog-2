@@ -23,11 +23,19 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Title</th>
-                                        <th>CreatedAt</th>
-                                        <th>Action</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
                                     </tr>
                                     </thead>
+                                    <tbody>
+                                    <tr th:each="user : ${page.getContent()}">
+                                        <th th:text="${user.id}">ID</th>
+                                        <th th:text="${user.name}">Name</th>
+                                        <th th:text="${user.email}">Email</th>
+                                        <th th:text="${user.mobile}">Mobile</th>
+                                    </tr>
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

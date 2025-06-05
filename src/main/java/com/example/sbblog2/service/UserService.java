@@ -3,6 +3,7 @@ package com.example.sbblog2.service;
 import com.example.sbblog2.dto.UserDTO;
 import com.example.sbblog2.entity.User;
 import jakarta.validation.constraints.Email;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface UserService {
 
     void updatePassword(User user);
 
-    List<User> findAll();
+    Page<User> findAll(Integer currentPage, Integer pageSize);
 }
