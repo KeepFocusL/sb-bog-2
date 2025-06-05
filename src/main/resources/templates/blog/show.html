@@ -26,9 +26,8 @@
                 <div class="col-lg-8">
                     <h1 th:text="${blog.title}">maven 加速，修改镜像源</h1>
                     <p class="meta text-muted mb-2rem"><a href="#">admin</a> - <i th:text="${#temporals.format(blog.created_at, 'yyyy-MM-dd HH:mm:ss')}"></i></p>
-                    <div th:data-content="${blog.content}" id="blog-content">
-
-                    </div>
+                    <div id="loading"><img src="/img/loading/loading.gif" alt="loading"></div>
+                    <div th:data-content="${blog.content}" id="blog-content"></div>
                 </div>
             </div>
         </article>
@@ -57,6 +56,16 @@
                     }
                 });
             });
+
+            // loading
+            const blogContent = document.getElementById('blog-content');
+            const observer = new MutationObserver(() => {
+                let loadingDiv = document.getElementById('loading');
+                if (loadingDiv) {
+                    loadingDiv.remove();
+                }
+            });
+            observer.observe(blogContent, { childList: true });
         </script>
     </div>
 
