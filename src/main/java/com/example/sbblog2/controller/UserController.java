@@ -179,6 +179,10 @@ public class UserController {
         passwordResetTokenService.expireThisToken(token);
 
         return "redirect:/login";
+    }
 
+    @GetMapping("blogs")
+    public String blogs(){
+        return "user/blogs";
     }
 }
