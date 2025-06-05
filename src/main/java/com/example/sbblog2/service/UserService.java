@@ -5,6 +5,8 @@ import com.example.sbblog2.entity.User;
 import jakarta.validation.constraints.Email;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserService {
 
@@ -13,4 +15,6 @@ public interface UserService {
     User findByEmail(@Email String email);
 
     void updatePassword(User user);
+
+    List<User> findAll();
 }
