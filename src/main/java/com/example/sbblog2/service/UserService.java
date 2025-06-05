@@ -12,4 +12,5 @@ public interface UserService {
 
     User findByEmail(@Email String email);
 
+    void updatePassword(User user);
 }

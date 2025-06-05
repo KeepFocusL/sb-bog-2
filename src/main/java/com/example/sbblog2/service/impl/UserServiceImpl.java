@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO userDTO) {
         System.out.println("UserServiceImpl.save");
+
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
@@ -34,9 +35,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
         Optional<User> firstByEmail = userRepository.findFirstByEmail(email);
-        User user = firstByEmail.orElse(null);
-        return user;
+        return firstByEmail.orElse(null);
+    }
+
+    @Override
+    public void updatePassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 }
