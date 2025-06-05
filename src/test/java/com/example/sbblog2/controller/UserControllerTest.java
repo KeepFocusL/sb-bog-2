@@ -68,6 +68,11 @@ public class UserControllerTest {
                         .param("name", System.currentTimeMillis() + "test")
                         .param("password", "password")
                 )
+                // 因为用户注册时会帮忙直接登录，所以验证的不是 isOk 而是 is3xxRedirection
+                /*
+                    // 帮该用户自动登录
+                    httpServletRequest.login(userDTO.getEmail(), userDTO.getPassword());
+                */
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
         ;
 
