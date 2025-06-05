@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/" , true)
+                                .defaultSuccessUrl("/user/dashboard" , true)
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                 )
