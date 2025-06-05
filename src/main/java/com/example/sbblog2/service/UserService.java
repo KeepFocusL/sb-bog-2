@@ -18,4 +18,6 @@ public interface UserService {
     void updatePassword(User user);
 
     Page<User> findAll(Integer currentPage, Integer pageSize);
+
+    void assignRole(String roleName);
 }

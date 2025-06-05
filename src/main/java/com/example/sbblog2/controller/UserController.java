@@ -196,6 +196,7 @@ public class UserController {
             return "user/blogs";
         } else {
             // 给当前用户分配 editor 角色
+            userService.assignRole("editor");
             redirectAttributes.addFlashAttribute("msg", "恭喜！博客开通成功(安全起见，有重要权限变更时，需要用户主动登录)");
             request.logout();
             return "redirect:/login";

@@ -1,9 +1,12 @@
 package com.example.sbblog2.service.impl;
 
+import com.example.sbblog2.dao.RoleRepository;
 import com.example.sbblog2.dao.UserRepository;
 import com.example.sbblog2.dto.UserDTO;
+import com.example.sbblog2.entity.Role;
 import com.example.sbblog2.entity.User;
 import com.example.sbblog2.service.UserService;
+import com.example.sbblog2.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public void save(UserDTO userDTO) {
@@ -55,5 +61,15 @@ public class UserServiceImpl implements UserService {
     public Page<User> findAll(Integer currentPage, Integer pageSize) {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("id").descending());
         return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public void assignRole(String roleName) {
+        User user = UserUtils.getCurrentUser();
+        // 根据 roleName 找到 Role
+        Role role = roleRepository.findFirstByName(roleName);
+        // 给当前用户分配角色
+        user.getRoles().add(role);
+        userRepository.save(user);
     }
 }
