@@ -42,3 +42,5 @@ upload
 
 application-dev.properties
 application-test.properties
+
+logs
