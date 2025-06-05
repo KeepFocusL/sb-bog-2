@@ -2,6 +2,9 @@ package com.example.sbblog2.controller;
 
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("test")
 public class TestController {
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Autowired
     JavaMailSender sender;
@@ -30,4 +34,13 @@ public class TestController {
 
         return "200";
     }
-}
+
+        @GetMapping("logger")
+        String testLogger(){
+            logger.debug("debug 级别的日志");
+            logger.info("info 级别的日志");
+            logger.warn("warn 级别的日志");
+            logger.error("error 级别的日志");
+            return "看日志文件";
+        }
+    }
