@@ -53,4 +53,9 @@ public class UserController {
         httpServletRequest.login(userDTO.getEmail(), userDTO.getPassword());
         return "redirect:/";
     }
+
+    @GetMapping("password-reset")
+    public String showPasswordResetForm(){
+        return "user/password-reset";
+    }
 }
