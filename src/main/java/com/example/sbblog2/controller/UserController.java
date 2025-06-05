@@ -2,7 +2,9 @@ package com.example.sbblog2.controller;
 
 import com.example.sbblog2.dto.PasswordResetEmailDTO;
 import com.example.sbblog2.dto.UserDTO;
+import com.example.sbblog2.entity.PasswordResetToken;
 import com.example.sbblog2.entity.User;
+import com.example.sbblog2.service.PasswordResetTokenService;
 import com.example.sbblog2.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("user")
@@ -29,6 +33,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PasswordResetTokenService passwordResetTokenService;
 
     @Autowired
     private View error;
@@ -92,7 +99,7 @@ public class UserController {
             return "user/password-reset";
         }
 
-        // todo: 发送邮件
+        // 发送邮件
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setFrom(new InternetAddress("3345973813@qq.com", "客服"));
@@ -102,11 +109,17 @@ public class UserController {
         String serverName = httpServletRequest.getServerName();
         int port = httpServletRequest.getServerPort();
         String baseUrl = scheme + "://" + serverName + ":" + port;
-        // todo : 自动生成随机 token
-        // token 要与 用户关联
-        // token 要 记录时间
-        String token = "wqrw1442";
-        Long id = existingUser.getId();
+
+        // UUID.randomUUID() 自动生成随机 token
+        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        passwordResetToken.setToken(UUID.randomUUID().toString());
+        LocalDateTime now = LocalDateTime.now();
+        passwordResetToken.setExpirationDate(now.plusMinutes(30));
+        passwordResetToken.setCreatedAt(now);
+        passwordResetToken.setUser(existingUser);
+
+        // 保存到数据库
+        passwordResetTokenService.save(passwordResetToken);
 
         helper.setText("""
                 <html>
@@ -116,7 +129,7 @@ public class UserController {
                         <p>链接将在 30 分钟后失效，请尽快操作</p>
                     </body>
                 </html>
-                """.formatted(baseUrl, token), true);
+                """.formatted(baseUrl, passwordResetToken.getToken()), true);
 
         sender.send(message);
         redirectAttributes.addFlashAttribute("success", "密码重置邮件已发送，请注意查收");
