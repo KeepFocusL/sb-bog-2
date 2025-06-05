@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,13 +26,14 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithUserDetails(userDetailsServiceBeanName = "jpaUserDetailsService" , value = "user@example.com")
-    void userDashboardWithLogin() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/user/dashboard"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("个人资料")))
-                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("user@example.com")))
-                .andExpect(MockMvcResultMatchers.content().string(StringContains.containsString("用户名")))
+    void userRegisterWithExistingEmail() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/user/register")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("email", "admin@example.com")
+                        .param("name", "admin")
+                        .param("password", "password")
+                )
+                .andExpect(MockMvcResultMatchers.model().attributeHasFieldErrorCode("user", "email", "exist"))
         ;
     }
 }
