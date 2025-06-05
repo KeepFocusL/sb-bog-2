@@ -41,6 +41,25 @@
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
+                        <div id="pagination-container" class="pt-1">
+                            <p class="text-muted p-1">当前第 [[${page.getNumber()+1}]] 页，总计 [[${page.getTotalPages()}]] 页，共 [[${page.getTotalElements()}]] 条记录</p>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" th:if="${page.hasPrevious()}">
+                                        <a class="page-link" href="#" th:href="${'/backend/user?page=' + page.getNumber()}">Previous</a>
+                                    </li>
+
+                                    <li th:class="${currentPageNumber == page.getNumber() + 1 ? 'page-item active' : 'page-item'}" class="page-item"
+                                        th:each="currentPageNumber:${#numbers.sequence(1, page.getTotalPages())}">
+                                        <a class="page-link" th:href="${'/backend/user?page=' + currentPageNumber}" href="#" th:text="${currentPageNumber}">页码</a>
+                                    </li>
+
+                                    <li class="page-item" th:if="${page.hasNext()}">
+                                        <a class="page-link" href="#" th:href="${'/backend/user?page=' + (page.getNumber() + 2)}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
