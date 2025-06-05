@@ -189,14 +189,17 @@ public class UserController {
 
     @GetMapping("create-your-blog")
     @PreAuthorize("isAuthenticated()")
-    public String createYourBlog(Model model){
+    public String createYourBlog(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws ServletException {
         boolean 具有admin或者editor角色 = false;
         if (具有admin或者editor角色) {
             model.addAttribute("msg", "您已经开通过了，可以直接发布博客");
+            return "user/blogs";
         } else {
             // 给当前用户分配 editor 角色
-            model.addAttribute("msg", "恭喜！博客开通成功");
+            redirectAttributes.addFlashAttribute("msg", "恭喜！博客开通成功(安全起见，有重要权限变更时，需要用户主动登录)");
+            request.logout();
+            return "redirect:/login";
         }
-        return "user/blogs";
+
     }
 }
