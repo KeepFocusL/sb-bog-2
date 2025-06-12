@@ -4,12 +4,7 @@
             <div class="col-lg-3">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <div class="text-center">
-                            <img th:src="${#authentication.principal.user.avatar}" class="img-fluid rounded-circle avatar shadow-sm">
-                            <p sec:authentication="name" class="text-muted font-size-14 mt-2 mb-2rem">user-name</p>
-                        </div>
-
-                        <div th:replace="~{user/_fragment :: #user-center-navbar}"></div>
+                        <div th:replace="~{user/_fragment :: #user-center-left}"></div>
                     </div>
                 </div>
             </div>

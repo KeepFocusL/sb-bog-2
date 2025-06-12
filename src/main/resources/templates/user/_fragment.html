@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 <body>
-<ul class="nav flex-column" id="user-center-navbar">
-  <li class="nav-item">
-    <a href="#" th:href="@{/user/dashboard}" class="nav-link"
-       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/dashboard') ? ' active' : ''}|">
-      <i class="bi bi-info-circle"></i>
-      个人资料
-    </a>
-  </li>
-  <li class="nav-item">
-    <a href="#" th:href="@{/user/blogs}" class="nav-link"
-       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/blogs') ? ' active' : ''}|">
-      <i class="bi bi-copy"></i>
-      我的博客
-    </a>
-  </li>
-  <li class="nav-item">
-    <a href="#" th:href="@{/user/change-password}" class="nav-link"
-       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/change-password') ? ' active' : ''}|">
-      <i class="bi bi-shield-check"></i>
-      修改密码
-    </a>
-  </li>
-</ul>
+
+<div id="user-center-left">
+  <div class="text-center">
+    <img th:src="${#authentication.principal.user.avatar}" class="img-fluid rounded-circle avatar shadow-sm">
+    <p sec:authentication="name" class="text-muted font-size-14 mt-2 mb-2rem">user-name</p>
+  </div>
+
+  <ul class="nav flex-column" id="user-center-navbar">
+    <li class="nav-item">
+      <a href="#" th:href="@{/user/dashboard}" class="nav-link"
+         th:class="|nav-link ${#strings.startsWith(requestURI, '/user/dashboard') ? ' active' : ''}|">
+        <i class="bi bi-info-circle"></i>
+        个人资料
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" th:href="@{/user/blogs}" class="nav-link"
+         th:class="|nav-link ${#strings.startsWith(requestURI, '/user/blogs') ? ' active' : ''}|">
+        <i class="bi bi-copy"></i>
+        我的博客
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" th:href="@{/user/change-password}" class="nav-link"
+         th:class="|nav-link ${#strings.startsWith(requestURI, '/user/change-password') ? ' active' : ''}|">
+        <i class="bi bi-shield-check"></i>
+        修改密码
+      </a>
+    </li>
+  </ul>
+</div>
+
 </body>
 </html>
