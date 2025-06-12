@@ -23,6 +23,7 @@ public class User {
     private String mobile;
     private LocalDateTime createdAt;
     private boolean enabled;
+    private String avatar;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
