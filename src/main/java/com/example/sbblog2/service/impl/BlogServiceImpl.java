@@ -29,13 +29,13 @@ public class BlogServiceImpl implements BlogService {
             blog.setUpdated_at(LocalDateTime.now());
         } else {
             blog.setCreated_at(LocalDateTime.now());
+            blog.setUser(UserUtils.getCurrentUser());
         }
 
         blog.setTitle(blogDTO.getTitle());
         blog.setContent(blogDTO.getContent());
         blog.setDescription(blogDTO.getDescription());
         blog.setCover(blogDTO.getCover());
-        blog.setUser(UserUtils.getCurrentUser());
 
         // 存入数据库
         return blogRepository.save(blog);
