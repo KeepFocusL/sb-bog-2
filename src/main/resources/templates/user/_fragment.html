@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<ul class="nav flex-column" id="user-center-navbar">
+  <li class="nav-item">
+    <a href="#" th:href="@{/user/dashboard}" class="nav-link"
+       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/dashboard') ? ' active' : ''}|">
+      <i class="bi bi-info-circle"></i>
+      个人资料
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="#" th:href="@{/user/blogs}" class="nav-link"
+       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/blogs') ? ' active' : ''}|">
+      <i class="bi bi-copy"></i>
+      我的博客
+    </a>
+  </li>
+</ul>
+</body>
+</html>

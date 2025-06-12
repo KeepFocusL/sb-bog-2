@@ -9,20 +9,7 @@
               <p sec:authentication="name" class="text-muted font-size-14 mt-2 mb-2rem">user-name</p>
             </div>
 
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a href="#" th:href="@{/user/dashboard}" class="nav-link" th:class="|nav-link ${#strings.startsWith(requestURI, '/user/dashboard') ? ' active' : ''}|">
-                  <i class="bi bi-info-circle"></i>
-                  个人资料
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" th:href="@{/user/blogs}" class="nav-link" th:class="|nav-link ${#strings.startsWith(requestURI, '/user/blogs') ? ' active' : ''}|">
-                  <i class="bi bi-copy"></i>
-                  我的博客
-                </a>
-              </li>
-            </ul>
+            <div th:replace="~{user/_fragment :: #user-center-navbar}"></div>
           </div>
         </div>
       </div>
