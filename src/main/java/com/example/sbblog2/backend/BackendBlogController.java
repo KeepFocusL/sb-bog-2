@@ -1,5 +1,7 @@
 package com.example.sbblog2.backend;
 
+import com.example.sbblog2.entity.User;
+import com.example.sbblog2.util.UserUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -103,6 +106,11 @@ public class BackendBlogController {
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable Long id) {
+        Blog blogFromDB = blogService.findById(id).get();
+        if (!isOwnedByUserOrIsAdmin(blogFromDB)){
+            throw new RuntimeException("异常操作");
+        }
+
         blogService.deleteById(id);
         return "redirect:/backend/blog";
     }
@@ -114,6 +122,12 @@ public class BackendBlogController {
             throw new EntityNotFoundException();
         }else {
             Blog blog = optionalBlog.get();
+
+            // 安全校验 - 检查当前登录用户是不是这篇文章的作者
+            if (!isOwnedByUserOrIsAdmin(blog)){
+                throw new RuntimeException("异常操作");
+            }
+
             model.addAttribute("blog", blog);
         }
         return "backend/blog/edit";
@@ -125,6 +139,12 @@ public class BackendBlogController {
             return "/backend/blog/edit";
         }
 
+        Blog blogFromDB = blogService.findById(blog.getId()).get();
+
+        if (!isOwnedByUserOrIsAdmin(blogFromDB)){
+            throw new RuntimeException("异常操作 - POST");
+        }
+
         uploadCover(file, blog);
 
         blogService.save(blog);
@@ -134,4 +154,9 @@ public class BackendBlogController {
         return "redirect:/backend/blog";
     }
 
+    // 安全校验 - 检查当前登录用户是不是这篇文章的作者
+    private boolean isOwnedByUserOrIsAdmin(Blog blogFromDB) {
+        User currentUser = UserUtils.getCurrentUser();
+        return Objects.equals(blogFromDB.getUser().getId(), currentUser.getId()) || UserUtils.isAdmin();
+    }
 }
