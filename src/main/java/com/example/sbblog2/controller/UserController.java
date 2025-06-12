@@ -203,4 +203,13 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("change-password")
+    @PreAuthorize("isAuthenticated()")
+    String changePassword(Model model) {
+        ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
+        model.addAttribute("changePasswordDTO", changePasswordDTO);
+        return "user/change-password";
+    }
+
 }

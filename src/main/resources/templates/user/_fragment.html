@@ -20,6 +20,13 @@
       我的博客
     </a>
   </li>
+  <li class="nav-item">
+    <a href="#" th:href="@{/user/change-password}" class="nav-link"
+       th:class="|nav-link ${#strings.startsWith(requestURI, '/user/change-password') ? ' active' : ''}|">
+      <i class="bi bi-shield-check"></i>
+      修改密码
+    </a>
+  </li>
 </ul>
 </body>
 </html>
