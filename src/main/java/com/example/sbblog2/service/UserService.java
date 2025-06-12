@@ -20,4 +20,6 @@ public interface UserService {
     Page<User> findAll(Integer currentPage, Integer pageSize);
 
     void assignRole(String roleName);
+
+    boolean checkPassword(User currentUser, String currentPassword);
 }

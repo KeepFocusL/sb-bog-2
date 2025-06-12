@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
         user.getRoles().add(role);
         userRepository.save(user);
     }
+
+    @Override
+    public boolean checkPassword(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 }
