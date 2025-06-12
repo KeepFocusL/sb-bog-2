@@ -22,4 +22,6 @@ public interface UserService {
     void assignRole(String roleName);
 
     boolean checkPassword(User currentUser, String currentPassword);
+
+    void update(User user);
 }

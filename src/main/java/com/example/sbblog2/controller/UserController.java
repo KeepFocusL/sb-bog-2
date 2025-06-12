@@ -15,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,9 +23,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -240,5 +244,44 @@ public class UserController {
         attributes.addFlashAttribute("msg", "密码修改成功！(安全起见，有重要信息变更时，需主动登录)");
         request.logout();
         return "redirect:/login";
+    }
+
+    @GetMapping("change-avatar")
+    @PreAuthorize("isAuthenticated()")
+    public String showChangeAvatarForm(){
+        return "user/change-avatar";
+    }
+
+    @PostMapping("change-avatar")
+    @PreAuthorize("isAuthenticated()")
+    String changeAvatar(@RequestParam("avatar") MultipartFile file, RedirectAttributes attributes) {
+        try {
+            User currentUser = UserUtils.getCurrentUser();
+            updateAvatar(file, currentUser);
+            userService.update(currentUser);
+            attributes.addFlashAttribute("success", "头像更新成功！");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("error", "头像更新失败：" + e.getMessage());
+        }
+        return "redirect:/user/change-avatar";
+    }
+
+    @Value("${custom.upload.base-path}")
+    String uploadBasePath;
+    @Value("${custom.upload.avatar-path}")
+    String avatarPath;
+    private void updateAvatar(MultipartFile file, User user) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            File dir = new File(uploadBasePath + File.separator + avatarPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            String originalFilename = file.getOriginalFilename();
+            assert originalFilename != null;
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String newFilename = UUID.randomUUID() + suffix;
+            file.transferTo(new File(dir.getAbsolutePath() + "/" + newFilename));
+            user.setAvatar("/" + avatarPath + "/" + newFilename);
+        }
     }
 }

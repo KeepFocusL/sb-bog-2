@@ -34,6 +34,13 @@
         修改密码
       </a>
     </li>
+    <li class="nav-item">
+      <a href="#" th:href="@{/user/change-avatar}" class="nav-link"
+         th:class="|nav-link ${#strings.startsWith(requestURI, '/user/change-avatar') ? ' active' : ''}|">
+        <i class="bi bi-person-circle"></i>
+        修改头像
+      </a>
+    </li>
   </ul>
 </div>
 

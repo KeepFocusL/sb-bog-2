@@ -1,0 +1,35 @@
+<div th:replace="~{ app :: layout ('修改头像', _, ~{::#main}, _) }" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <div id="main" class="container user-center my-2rem">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div th:replace="~{user/_fragment :: #user-center-left}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 mt-3 mt-lg-0">
+                <div class="card shadow-sm">
+                    <div class="card-header">修改头像</div>
+
+                    <div class="card-body">
+                        <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}">
+                        </div>
+                        <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}">
+                        </div>
+
+                        <form th:action="@{/user/change-avatar}" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="avatar" class="form-label">选择新头像</label>
+                                <input class="form-control" type="file" id="avatar" name="avatar" accept="image/*" required>
+                                <div class="form-text">支持 jpg、png 格式，文件大小不超过 10MB</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">上传</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
